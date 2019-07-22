@@ -1,8 +1,8 @@
 import yaml
-from pangeamt_toolkit.seg.seg import Seg
-from pangeamt_toolkit.bpe.bpe_process import BPE_process
-from pangeamt_toolkit.truecasing.truecasing_process import Truecase_process
-from pangeamt_toolkit.tokenization.tokenize_process import Tokenize_process
+from pangeamt_toolkit.seg import Seg
+from pangeamt_toolkit.bpe_process import BPE_process
+from pangeamt_toolkit.truecasing_process import Truecase_process
+from pangeamt_toolkit.tokenize_process import Tokenize_process
 
 class Pipeline:
     def __init__(self, config):
