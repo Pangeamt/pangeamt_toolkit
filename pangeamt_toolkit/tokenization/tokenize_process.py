@@ -1,5 +1,5 @@
 from sacremoses import MosesTokenizer, MosesDetokenizer
-from seg.seg import Seg
+from pangeamt_toolkit.seg.seg import Seg
 
 class Tokenize_process:
 

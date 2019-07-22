@@ -1,6 +1,6 @@
 from sacremoses import MosesTruecaser, MosesDetruecaser
-from seg.seg import Seg
-from seg.seg_case import Seg_case
+from pangeamt_toolkit.seg.seg import Seg
+from pangeamt_toolkit.seg.seg_case import Seg_case
 
 class Truecase_process:
 

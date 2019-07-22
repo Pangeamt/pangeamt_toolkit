@@ -1,5 +1,5 @@
-from bpe.apply_bpe import BPE
-from seg.seg import Seg
+from pangeamt_toolkit.bpe.apply_bpe import BPE
+from pangeamt_toolkit.seg.seg import Seg
 from re import sub
 import codecs
 
