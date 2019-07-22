@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'pangeamt_toolkit',
   packages = ['pangeamt_toolkit'],
-  version = '0.2',
+  version = '0.3',
   license='MIT',
   description = 'PANGEAMT-TOOLKIT',
   author = 'PANGEAMT',
