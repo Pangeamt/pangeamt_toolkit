@@ -1,11 +1,12 @@
-from sacremoses import MosesTokenizer, MosesDetokenizer
+from sacremoses import MosesTokenizer as _MosesTokenizer
+from sacremoses import MosesDetokenizer as _MosesDetokenizer
 from pangeamt_toolkit.seg import Seg
 
 class Tokenize_process:
 
-    def __init__(self, config):
-        self._mtk = MosesTokenizer(lang=config['src_lang'])
-        self._mdk = MosesDetokenizer(lang=config['tgt_lang'])
+    def __init__(self, src_lang, tgt_lang):
+        self._mtk = _MosesTokenizer(lang=src_lang)
+        self._mdk = _MosesDetokenizer(lang=tgt_lang)
 
     def preprocess(self, seg):
         seg.src = (' ').join(self._mtk.tokenize(seg.src, escape=False))

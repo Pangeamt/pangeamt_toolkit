@@ -1,12 +1,13 @@
-from sacremoses import MosesTruecaser, MosesDetruecaser
+from sacremoses import MosesTruecaser as _MosesTruecaser
+from sacremoses import MosesDetruecaser as _MosesDetruecaser
 from pangeamt_toolkit.seg import Seg
 from pangeamt_toolkit.seg_case import Seg_case
 
 class Truecase_process:
 
-    def __init__(self, config):
-        self._mtr = MosesTruecaser(config['model'])
-        self._mdr = MosesDetruecaser()
+    def __init__(self, model):
+        self._mtr = _MosesTruecaser(model)
+        self._mdr = _MosesDetruecaser()
 
     def preprocess(self, seg):
         if seg.src.isupper():
