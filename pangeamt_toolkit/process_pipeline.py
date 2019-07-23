@@ -7,9 +7,9 @@ class Pipeline:
             self._config = _yaml.safe_load(file)
         self._processes = []
         for process in self._config:
-            klass_name = self._config[process]['class']
-            path = self._config[process]['path']
-            args = self._config[process]['args']
+            klass_name = process['class']
+            path = process['path']
+            args = process['args']
             mod = __import__(path, fromlist=[klass_name])
             klass = getattr(mod, klass_name)
             processor = klass(**args)

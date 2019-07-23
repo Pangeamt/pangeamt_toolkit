@@ -9,7 +9,11 @@ class Tokenize_process:
         self._mdk = _MosesDetokenizer(lang=tgt_lang)
 
     def preprocess(self, seg):
+        """ Applies the MosesTokenizer to seg.src
+        """
         seg.src = (' ').join(self._mtk.tokenize(seg.src, escape=False))
 
     def postprocess(self, seg):
+        """ Applies the MosesDetokenizer to seg.tgt
+        """
         seg.tgt = self._mdk.detokenize(seg.tgt.split(' '))

@@ -10,6 +10,10 @@ class Truecase_process:
         self._mdr = _MosesDetruecaser()
 
     def preprocess(self, seg):
+        """ Checks if the seg.src string is writen in lowercase, uppercase
+            or both, and writes the casing to seg.src_case then it applies
+            the MosesTruecaser.
+        """
         if seg.src.isupper():
             seg.src_case = Seg_case.UPPER
         elif seg.src.islower():
@@ -20,6 +24,8 @@ class Truecase_process:
         seg.src = (' ').join(self._mtr.truecase(seg.src))
 
     def postprocess(self, seg):
+        """ Modifies seg.tgt according to seg.src_case.
+        """
         if seg.src_case == Seg_case.UPPER:
             seg.tgt = seg.tgt.upper()
         elif seg.src_case == Seg_case.LOWER:

@@ -15,9 +15,11 @@ class BPE_process:
             self._bpe = _BPE(_codecs.open(bpe_codes, encoding='utf-8'))
 
     def preprocess(self, seg):
-        '''Apply BPE to seg.src'''
+        '''Apply BPE to seg.src
+        '''
         seg.src = self._bpe.segment(seg.src)
 
     def postprocess(self, seg):
-        '''Remove BPE from seg.tgt'''
+        '''Remove BPE from seg.tgt
+        '''
         seg.tgt = _sub("(@@ )|(@@ ?$)", '', seg.tgt)
