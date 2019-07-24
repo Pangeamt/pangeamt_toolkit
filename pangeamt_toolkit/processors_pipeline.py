@@ -1,5 +1,4 @@
 import yaml as _yaml
-from pangeamt_toolkit.seg import Seg
 
 class Pipeline:
     def __init__(self, processors, processors_config):

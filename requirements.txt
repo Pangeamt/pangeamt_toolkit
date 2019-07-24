@@ -1,5 +1,7 @@
 Click==7.0
 joblib==0.13.2
+PyYAML==5.1.1
 sacremoses==0.0.22
 six==1.12.0
+subword-nmt==0.3.6
 tqdm==4.32.2

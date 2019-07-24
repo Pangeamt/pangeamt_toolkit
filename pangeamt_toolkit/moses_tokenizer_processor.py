@@ -1,8 +1,7 @@
 from sacremoses import MosesTokenizer as _MosesTokenizer
 from sacremoses import MosesDetokenizer as _MosesDetokenizer
-from pangeamt_toolkit.seg import Seg
 
-class Tokenize_process:
+class MosesTokenizerProcessor:
 
     def __init__(self, src_lang, tgt_lang):
         self._mtk = _MosesTokenizer(lang=src_lang)

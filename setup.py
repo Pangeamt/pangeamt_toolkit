@@ -2,19 +2,20 @@ from distutils.core import setup
 setup(
   name = 'pangeamt_toolkit',
   packages = ['pangeamt_toolkit'],
-  version = '1.1',
+  version = '1.2',
   license='MIT',
   description = 'PANGEAMT-TOOLKIT',
   author = 'PANGEAMT',
   author_email = 'a.cerda@pangeanic.es',
   url = 'https://github.com/Pangeamt/pangeamt_toolkit',
-  download_url = 'https://github.com/Pangeamt/pangeamt_toolkit/archive/1.1.tar.gz',
+  download_url = 'https://github.com/Pangeamt/pangeamt_toolkit/archive/1.2.tar.gz',
   install_requires=[
             'Click',
             'joblib',
             'PyYAML',
             'sacremoses',
             'six',
-            'tqdm'
+            'tqdm',
+            'subword-nmt'
       ]
 )

@@ -1,9 +1,8 @@
 from sacremoses import MosesTruecaser as _MosesTruecaser
 from sacremoses import MosesDetruecaser as _MosesDetruecaser
-from pangeamt_toolkit.seg import Seg
 from pangeamt_toolkit.seg_case import Seg_case
 
-class Truecase_process:
+class MosesTruecasingProcessor:
 
     def __init__(self, model):
         self._mtr = _MosesTruecaser(model)

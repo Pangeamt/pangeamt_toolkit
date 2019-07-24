@@ -1,16 +1,17 @@
-from pangeamt_toolkit.apply_bpe import BPE as _BPE
-from pangeamt_toolkit.seg import Seg
+from subword_nmt.apply_bpe import BPE as _BPE
+from subword_nmt.apply_bpe import read_vocabulary as rv
 from re import sub as _sub
 import codecs as _codecs
 
 
-class BPE_process:
+class BPEProcessor:
 
     def __init__(self, bpe_codes, bpe_vocab=None, bpe_threshold=None):
         if bpe_vocab:
+            _vocab = \
+                rv(_codecs.open(bpe_vocab, encoding='utf-8'), bpe_threshold)
             self._bpe = _BPE(_codecs.open(bpe_codes, encoding='utf-8'),\
-                vocab=_codecs.open(bpe_vocab, encoding='utf-8'),\
-                vocab_threshold=bpe_threshold)
+                vocab=_vocab, vocab_threshold=bpe_threshold)
         else:
             self._bpe = _BPE(_codecs.open(bpe_codes, encoding='utf-8'))
 
