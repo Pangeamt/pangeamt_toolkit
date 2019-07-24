@@ -11,7 +11,7 @@ class BPEProcessor:
             _vocab = \
                 rv(_codecs.open(bpe_vocab, encoding='utf-8'), bpe_threshold)
             self._bpe = _BPE(_codecs.open(bpe_codes, encoding='utf-8'),\
-                vocab=_vocab, vocab_threshold=bpe_threshold)
+                vocab=_vocab)
         else:
             self._bpe = _BPE(_codecs.open(bpe_codes, encoding='utf-8'))
 
