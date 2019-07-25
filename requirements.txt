@@ -1,7 +1,13 @@
+certifi==2019.6.16
+chardet==3.0.4
 Click==7.0
+idna==2.8
+jieba==0.39
 joblib==0.13.2
+mecab-python3==0.996.2
 PyYAML==5.1.1
 sacremoses==0.0.22
 six==1.12.0
 subword-nmt==0.3.6
 tqdm==4.32.2
+urllib3==1.25.3
