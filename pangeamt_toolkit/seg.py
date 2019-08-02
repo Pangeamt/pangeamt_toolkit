@@ -8,6 +8,8 @@ class Seg:
         self._src_entities = []
         self._tgt_entities = []
         self._src_case = None
+        self._pred_score = 0
+        self._attention = None
 
     def get_src_entities(self):
         return self._src_entities
@@ -102,3 +104,19 @@ class Seg:
     def set_src_case(self, case):
         self._src_case = case
     src_case = property(get_src_case, set_src_case)
+
+
+    def get_pred_score(self):
+        return self._pred_score
+
+    def set_pred_score(self, pred_score):
+        self._pred_score = pred_score
+    pred_score = property(get_pred_score, set_pred_score)
+
+
+    def get_attention(self):
+        return self._attention
+
+    def set_attention(self, attention):
+        self._attention = attention
+    attention = property(get_attention, set_attention)
