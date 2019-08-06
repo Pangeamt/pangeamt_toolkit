@@ -38,7 +38,7 @@ class Pipeline:
         with open(src_path, 'r') as src_file:
             with open(tgt_path, 'w+') as tgt_file:
                 for line in src_file.readlines():
-                    line = preprocess_str(line)
+                    line = self.preprocess_str(line)
                     line = _sub('.', '.\n', line)
                     if line[-1:] == '\n':
                         tgt_file.write(line)
@@ -61,7 +61,7 @@ class Pipeline:
         with open(src_path, 'r') as src_file:
             with open(tgt_path, 'w+') as tgt_file:
                 for line in src_file.readlines():
-                    line = postprocess_str(line)
+                    line = self.postprocess_str(line)
                     tgt_file.write(line + '\n')
 
     _PROCESSORS = {
