@@ -1,9 +1,10 @@
+import pangeamt_toolkit.onmt
 from pangeamt_toolkit.seg import Seg
-from pangeamt_toolkit.bpe_processor import BPEProcessor
-from pangeamt_toolkit.processors_pipeline import Pipeline
-from pangeamt_toolkit.jieba_tokenizer_processor import JiebaTokenizerProcessor
-from pangeamt_toolkit.mecab_tokenizer_processor import MecabTokenizerProcessor
-from pangeamt_toolkit.moses_tokenizer_processor import MosesTokenizerProcessor
-from pangeamt_toolkit.moses_truecasing_processor import MosesTruecasingProcessor
-from pangeamt_toolkit.moses_normalizer_processor import MosesNormalizerProcessor
-from pangeamt_toolkit.general_tokenizer_processor import GeneralTokenizerProcessor
+from pangeamt_toolkit.processors import BPEProcessor, Pipeline
+from pangeamt_toolkit.processors import JiebaTokenizerProcessor
+from pangeamt_toolkit.processors import MecabTokenizerProcessor
+from pangeamt_toolkit.processors import MosesTokenizerProcessor
+from pangeamt_toolkit.processors import MosesTruecasingProcessor
+from pangeamt_toolkit.processors import MosesNormalizerProcessor
+from pangeamt_toolkit.processors import GeneralTokenizerProcessor
+from pangeamt_toolkit.pangeanmt import Pangeanmt, PangeanmtServer
