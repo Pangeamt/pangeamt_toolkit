@@ -39,7 +39,7 @@ class Pipeline:
             with open(tgt_path, 'w+') as tgt_file:
                 for line in src_file.readlines():
                     line = self.preprocess_str(line)
-                    line = _sub('.', '.\n', line)
+                    #line = _sub('\.', '.\n', line)
                     if line[-1:] == '\n':
                         tgt_file.write(line)
                     else:
