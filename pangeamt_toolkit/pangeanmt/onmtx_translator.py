@@ -2,6 +2,7 @@ from __future__ import print_function
 from pangeamt_toolkit.onmt.translate.translator import Translator as _Translator
 import pangeamt_toolkit.onmt.model_builder
 import pangeamt_toolkit.onmt.translate.beam
+from pangeamt_toolkit.onmt.translate import TranslationBuilder as _TransBuilder
 import pangeamt_toolkit.onmt.inputters as inputters
 import pangeamt_toolkit.onmt.decoders.ensemble
 from pangeamt_toolkit.pangeanmt.onmtx_translation import OnmtxTranslation
@@ -44,7 +45,7 @@ class OnmtxTranslator(_Translator):
         )
 
         # Translate
-        xlation_builder = onmt.translate.TranslationBuilder(
+        xlation_builder = _TransBuilder(
             data, self.fields, self.n_best, self.replace_unk, None,
             self.phrase_table
         )

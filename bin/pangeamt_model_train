@@ -1,0 +1,50 @@
+#!/bin/bash
+
+#TODO define
+DIR=$1
+SR=$2
+TG=$3
+#gpu=1
+
+split_corpus=true
+train_steps=1000000
+
+if [ $split_corpus = "true" ]; then
+
+        cat ${DIR}/data/raw/*.${SR} > ${DIR}/data/all.${SR}
+        cat ${DIR}/data/raw/*.${TG} > ${DIR}/data/all.${TG}
+
+        for x in $(seq 1 $(wc -l "${DIR}/data/all.${SR}" | awk '{print $1}')); do echo "#####SEPARATOR#####"; done >${DIR}/data/sep
+        paste ${DIR}/data/all.${SR} ${DIR}/data/sep ${DIR}/data/all.${TG} > ${DIR}/data/all.${SR}${TG}
+        cat ${DIR}/data/all.${SR}${TG} | sed "s/\t//g" | sort | uniq | shuf  > ${DIR}/data/all_prep.${SR}${TG}
+        cat ${DIR}/data/all_prep.${SR}${TG} | awk -F "#####SEPARATOR#####" '{print $1}' >${DIR}/data/all_prep.${SR}
+        cat ${DIR}/data/all_prep.${SR}${TG} | awk -F "#####SEPARATOR#####" '{print $2}' >${DIR}/data/all_prep.${TG}
+        rm ${DIR}/data/all.${SR} ${DIR}/data/all.${TG} ${DIR}/data/sep ${DIR}/data/all.${SR}${TG} ${DIR}/data/all_prep.${SR}${TG}
+
+        let linesTrain=$(wc -l ${DIR}/data/all_prep.${SR} | awk '{print $1}')-4000
+        head -n $linesTrain ${DIR}/data/all_prep.${SR} > ${DIR}/data/train.${SR}
+        head -n $linesTrain ${DIR}/data/all_prep.${TG} > ${DIR}/data/train.${TG}
+        tail -n 4000 ${DIR}/data/all_prep.${SR} | head -n 2000 > ${DIR}/data/dev.${SR}
+        tail -n 4000 ${DIR}/data/all_prep.${TG} | head -n 2000 > ${DIR}/data/dev.${TG}
+        tail -n 4000 ${DIR}/data/all_prep.${SR} | tail -n 2000 > ${DIR}/data/test.${SR}
+        tail -n 4000 ${DIR}/data/all_prep.${TG} | tail -n 2000 > ${DIR}/data/test.${TG}
+        rm ${DIR}/data/all_prep.${SR} ${DIR}/data/all_prep.${TG}
+
+fi
+
+subword-nmt learn-joint-bpe-and-vocab --input ${DIR}/data/train.${SR} ${DIR}/data/train.${TG} -s 32000 -o ${DIR}/codes32k.bpe --write-vocabulary ${DIR}/vocab.bpe.${SR} ${DI$
+sacremoses train-truecase -m ${DIR}/truecasemodel.${SR} -j 4 < ${DIR}/data/train.${SR}
+sacremoses train-truecase -m ${DIR}/truecasemodel.${TG} -j 4 < ${DIR}/data/train.${TG}
+
+pangeamt_file_preprocess.py ${DIR}/processors.${SR}.yml ${DIR}/data/train.${SR} ${DIR}/data/train.norm.tok.truecase.bpe.${SR}
+pangeamt_file_preprocess.py ${DIR}/processors.${TG}.yml ${DIR}/data/train.${TG} ${DIR}/data/train.norm.tok.truecase.bpe.${TG}
+pangeamt_file_preprocess.py ${DIR}/processors.${SR}.yml ${DIR}/data/dev.${SR} ${DIR}/data/dev.norm.tok.truecase.bpe.${SR}
+pangeamt_file_preprocess.py ${DIR}/processors.${TG}.yml ${DIR}/data/dev.${TG} ${DIR}/data/dev.norm.tok.truecase.bpe.${TG}
+pangeamt_file_preprocess.py ${DIR}/processors.${SR}.yml ${DIR}/data/test.${SR} ${DIR}/data/test.norm.tok.truecase.bpe.${SR}
+pangeamt_file_preprocess.py ${DIR}/processors.${TG}.yml ${DIR}/data/test.${TG} ${DIR}/data/test.norm.tok.truecase.bpe.${TG}
+
+pangeamt_preprocess.py -train_src ${DIR}/data/train.norm.tok.truecase.bpe.${SR} -train_tgt ${DIR}/data/train.norm.tok.truecase.bpe.${TG} -valid_src ${DIR}/data/dev.norm.tok$
+
+mkdir ${DIR}/transformer
+
+pangeamt_train.py -data ${DIR}/data/data -save_model ${DIR}/model_${SR}${TG} -layers 6 -rnn_size 512 -word_vec_size 512 -transformer_ff 2048 -heads 8 -encoder_type transfor$
