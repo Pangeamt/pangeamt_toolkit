@@ -9,14 +9,14 @@ import glob
 import os
 import codecs
 
-import onmt
-import onmt.inputters
-import onmt.opts
+import pangeamt_toolkit.onmt
+import pangeamt_toolkit.onmt.inputters
+import pangeamt_toolkit.onmt.opts
 import preprocess
 
 
 parser = configargparse.ArgumentParser(description='preprocess.py')
-onmt.opts.preprocess_opts(parser)
+pangeamt_toolkit.onmt.opts.preprocess_opts(parser)
 
 SAVE_DATA_PREFIX = 'data/test_preprocess'
 
@@ -38,7 +38,7 @@ class TestData(unittest.TestCase):
         self.opt = opt
 
     def dataset_build(self, opt):
-        fields = onmt.inputters.get_fields("text", 0, 0)
+        fields = pangeamt_toolkit.onmt.inputters.get_fields("text", 0, 0)
 
         if hasattr(opt, 'src_vocab') and len(opt.src_vocab) > 0:
             with codecs.open(opt.src_vocab, 'w', 'utf-8') as f:
@@ -47,8 +47,8 @@ class TestData(unittest.TestCase):
             with codecs.open(opt.tgt_vocab, 'w', 'utf-8') as f:
                 f.write('a\nb\nc\nd\ne\nf\n')
 
-        src_reader = onmt.inputters.str2reader[opt.data_type].from_opt(opt)
-        tgt_reader = onmt.inputters.str2reader["text"].from_opt(opt)
+        src_reader = pangeamt_toolkit.onmt.inputters.str2reader[opt.data_type].from_opt(opt)
+        tgt_reader = pangeamt_toolkit.onmt.inputters.str2reader["text"].from_opt(opt)
         preprocess.build_save_dataset(
             'train', fields, src_reader, tgt_reader, opt)
 

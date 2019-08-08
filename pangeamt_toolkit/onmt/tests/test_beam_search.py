@@ -1,6 +1,6 @@
 import unittest
-from onmt.translate.beam import GNMTGlobalScorer
-from onmt.translate.beam_search import BeamSearch
+from pangeamt_toolkit.onmt.translate.beam import GNMTGlobalScorer
+from pangeamt_toolkit.onmt.translate.beam_search import BeamSearch
 
 from copy import deepcopy
 

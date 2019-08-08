@@ -1,5 +1,5 @@
 import unittest
-from onmt.translate.beam import Beam, GNMTGlobalScorer
+from pangeamt_toolkit.onmt.translate.beam import Beam, GNMTGlobalScorer
 
 import torch
 

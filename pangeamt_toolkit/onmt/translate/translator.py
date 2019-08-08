@@ -27,7 +27,7 @@ def build_translator(opt, report_score=True, logger=None, out_file=None):
         if len(opt.models) > 1 else pangeamt_toolkit.onmt.model_builder.load_test_model
     fields, model, model_opt = load_test_model(opt)
 
-    scorer = onmt.translate.GNMTGlobalScorer.from_opt(opt)
+    scorer = pangeamt_toolkit.onmt.translate.GNMTGlobalScorer.from_opt(opt)
 
     translator = Translator.from_opt(
         model,
@@ -310,7 +310,7 @@ class Translator(object):
             shuffle=False
         )
 
-        xlation_builder = onmt.translate.TranslationBuilder(
+        xlation_builder = pangeamt_toolkit.onmt.translate.TranslationBuilder(
             data, self.fields, self.n_best, self.replace_unk, tgt,
             self.phrase_table
         )

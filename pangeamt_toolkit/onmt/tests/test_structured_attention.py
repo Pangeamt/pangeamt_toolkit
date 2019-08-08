@@ -1,5 +1,5 @@
 import unittest
-from onmt.modules.structured_attention import MatrixTree
+from pangeamt_toolkit.onmt.modules.structured_attention import MatrixTree
 
 import torch
 

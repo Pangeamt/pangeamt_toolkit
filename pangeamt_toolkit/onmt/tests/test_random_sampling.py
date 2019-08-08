@@ -1,5 +1,5 @@
 import unittest
-from onmt.translate.random_sampling import RandomSampling
+from pangeamt_toolkit.onmt.translate.random_sampling import RandomSampling
 
 import torch
 

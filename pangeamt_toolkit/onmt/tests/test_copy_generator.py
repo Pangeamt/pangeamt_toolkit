@@ -1,5 +1,5 @@
 import unittest
-from onmt.modules.copy_generator import CopyGenerator, CopyGeneratorLoss
+from pangeamt_toolkit.onmt.modules.copy_generator import CopyGenerator, CopyGeneratorLoss
 
 import itertools
 from copy import deepcopy
@@ -7,7 +7,7 @@ from copy import deepcopy
 import torch
 from torch.nn.functional import softmax
 
-from onmt.tests.utils_for_tests import product_dict
+from pangeamt_toolkit.onmt.tests.utils_for_tests import product_dict
 
 
 class TestCopyGenerator(unittest.TestCase):

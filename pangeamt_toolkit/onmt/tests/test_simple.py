@@ -1,6 +1,6 @@
-import onmt
+import pangeamt_toolkit.onmt
 
 
 def test_load():
-    onmt
+    pangeamt_toolkit.onmt
     pass

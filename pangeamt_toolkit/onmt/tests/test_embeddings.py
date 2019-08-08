@@ -1,12 +1,12 @@
 import unittest
-from onmt.modules.embeddings import Embeddings
+from pangeamt_toolkit.onmt.modules.embeddings import Embeddings
 
 import itertools
 from copy import deepcopy
 
 import torch
 
-from onmt.tests.utils_for_tests import product_dict
+from pangeamt_toolkit.onmt.tests.utils_for_tests import product_dict
 
 
 class TestEmbeddings(unittest.TestCase):

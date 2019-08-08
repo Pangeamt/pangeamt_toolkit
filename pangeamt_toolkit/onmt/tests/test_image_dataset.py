@@ -1,5 +1,5 @@
 import unittest
-from onmt.inputters.image_dataset import ImageDataReader
+from pangeamt_toolkit.onmt.inputters.image_dataset import ImageDataReader
 
 import os
 import shutil

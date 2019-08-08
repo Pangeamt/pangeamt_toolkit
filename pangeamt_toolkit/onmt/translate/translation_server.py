@@ -239,7 +239,7 @@ class ServerModel(object):
         prec_argv = sys.argv
         sys.argv = sys.argv[:1]
         parser = ArgumentParser()
-        onmt.opts.translate_opts(parser)
+        pangeamt_toolkit.onmt.opts.translate_opts(parser)
 
         models = opt['models']
         if not isinstance(models, (list, tuple)):

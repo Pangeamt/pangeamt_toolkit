@@ -1,5 +1,5 @@
 import unittest
-from onmt.translate.translation_server import ServerModel, TranslationServer
+from pangeamt_toolkit.onmt.translate.translation_server import ServerModel, TranslationServer
 
 import os
 from six import string_types
@@ -7,7 +7,7 @@ from textwrap import dedent
 
 import torch
 
-from onmt.translate.translator import Translator
+from pangeamt_toolkit.onmt.translate.translator import Translator
 
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
