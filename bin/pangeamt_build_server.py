@@ -9,6 +9,6 @@ if len(sys.argv) < 2 or sys.argv[1] == '-h' or sys.argv[1] == '--help':
 try:
     server = PangeanmtServer(sys.argv[1], sys.argv[2])
 except:
-    server = PaneganmtServer(sys.argv[1])
-    
+    server = PangeanmtServer(sys.argv[1])
+
 server.start()
