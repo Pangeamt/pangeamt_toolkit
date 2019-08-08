@@ -1,15 +1,22 @@
 from aiohttp import web
 
 async def train(req):
-    nmt = req['nmt']
-    pipeline = req['pipeline']
-    lock = req['lock']
+    nmt = req.app['nmt']
+    pipeline = req.app['pipeline']
+    pipeline_tgt = req.app['pipeline_tgt']
+    lock = req.app['lock']
+    ol = req.app['ol']
+
     try:
+        if not ol:
+            raise Exception('Online Learning is not active.')
         req = await req.json() # TODO sensitive point
         async with lock:
             for tu in req['tus']:
-                src_preprocessed = pipeline.preprocess(tu['src'])
-                tgt_preprocessed = pipeline.preprocess(tu['tgt'])
+                src_preprocessed = pipeline.preprocess_str(tu['src'])
+                print(src_preprocessed)
+                tgt_preprocessed = pipeline_tgt.preprocess_str(tu['tgt'])
+                print(tgt_preprocessed)
 
                 nmt.train(src_preprocessed, tgt_preprocessed)
         resp = {

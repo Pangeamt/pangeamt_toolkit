@@ -1,24 +1,28 @@
-from aiohttp import web
+from aiohttp import web as _web
 
 async def translate(req):
-    nmt = req['nmt']
-    pipeline = req['pipeline']
-    lock = req['lock']
-    
-    try:
-        req = await req.json() # TODO sensitive point
-        async with lock:
-            for tu in req.get('tus'):
-                src_preprocessed = pipeline.preprocess(tu['src'])
-                batch_to_trans.append(src_preprocessed)
+    nmt = req.app['nmt']
+    pipeline = req.app['pipeline']
+    lock = req.app['lock']
+    sem = req.app['sem']
 
-            translations = nmt.translate(batch_to_trans)
+    req = await req.json() # TODO sensitive point
+    batch_to_trans = []
+    async with sem:
+        for tu in req.get('tus'):
+            src_preprocessed = pipeline.preprocess_str(tu['src'])
+            batch_to_trans.append(src_preprocessed)
 
-            for tu in req.get('tus'):
-                tu['tgt'] = pipeline.postprocess(translations.pop(0))
+    async with lock:
+        translations = nmt.translate(batch_to_trans)
 
-        return web.json_response(req, status=200)
+    for tu in req.get('tus'):
+        translation = translations.pop(0)
+        translation = (' ').join(translation.tgt)
+        tu['tgt'] = pipeline.postprocess_str(translation)
 
-    except Exception as e:
-        response_obj = {'status': 'failed', 'reason': str(e)}
-        return web.json_response(response_obj, status=500)
+    return _web.json_response(req, status=200)
+
+#    except Exception as e:
+#        response_obj = {'status': 'failed', 'reason': str(e)}
+#        return _web.json_response(response_obj, status=500)

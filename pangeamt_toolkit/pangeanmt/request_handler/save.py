@@ -1,11 +1,14 @@
 from aiohttp import web
 
 async def save(req):
-    nmt = req['nmt']
-    new_model_dir = req['new_model_dir']
-    lock = req['lock']
+    nmt = req.app['nmt']
+    new_model_dir = req.app['new_model_dir']
+    lock = req.app['lock']
+    ol = req.app['ol']
 
     try:
+        if not ol:
+            raise Exception('Online Learning is not active.')
         async with lock:
             nmt.save_model(new_model_dir)
         resp = {

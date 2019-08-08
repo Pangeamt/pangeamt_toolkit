@@ -7,6 +7,7 @@ from aiohttp import web
 from pangeamt_toolkit.pangeanmt.request_handler.save import save
 from pangeamt_toolkit.pangeanmt.request_handler.train import train
 from pangeamt_toolkit.pangeanmt.request_handler.translate import translate
+from pangeamt_toolkit import Pipeline
 from pangeamt_toolkit.pangeanmt import Pangeanmt
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
@@ -15,20 +16,28 @@ current_dir = os.path.abspath(os.path.dirname(__file__))
 os.chdir(current_dir)
 
 class PangeanmtServer:
-    def __init__(self, extended_model_path, new_model_path):
-        app = web.Application()
+    def __init__(self, extended_model_path, new_model_path=None):
+        self._app = web.Application()
         config_path = extended_model_path + '/config.json'
         with open(config_path, 'r') as file:
             config = json.loads(file.read())
 
-        app['nmt'] = Pangeanmt(extended_model_path) # Can use config['model']
-        app['new_model_path'] = new_model_path
-        app['pipeline'] = Pipeline(config['pipeline_config'])
-        app['lock'] = asyncio.Lock()
+        self._app['nmt'] = Pangeanmt(extended_model_path) # config['model'] ?
+        self._app['pipeline'] = Pipeline(config['pipeline_config'])
+        self._app['pipeline_tgt'] = Pipeline(config['pipeline_config_tgt'])
+        self._app['lock'] = asyncio.Lock()
+        self._app['sem'] = asyncio.Semaphore()
+        self._app['ol'] = config['online_learning']['active']
 
-        app.router.add_post('/save', save)
-        app.router.add_post('/train', train)
-        app.router.add_post('/translate', translate)
+        if self._app['ol']:
+            if new_model_path:
+                self._app['new_model_path'] = new_model_path
+            else:
+                raise ValueError('Missing online learning path to new model.')
+
+        self._app.router.add_post('/save', save)
+        self._app.router.add_post('/train', train)
+        self._app.router.add_post('/translate', translate)
 
     def start(self):
-        web.run_app(app, port=8081)
+        web.run_app(self._app, port=8081)
