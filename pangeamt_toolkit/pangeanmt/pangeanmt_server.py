@@ -17,7 +17,7 @@ current_dir = os.path.abspath(os.path.dirname(__file__))
 os.chdir(current_dir)
 
 class PangeanmtServer:
-    def __init__(self, extended_model_path, new_model_path=None):
+    def __init__(self, extended_model_path):
         self._app = web.Application()
         config_path = extended_model_path + '/config.json'
         with open(config_path, 'r') as file:
@@ -26,15 +26,10 @@ class PangeanmtServer:
         self._app['nmt'] = Pangeanmt(extended_model_path) # config['model'] ?
         self._app['pipeline'] = Pipeline(config['pipeline_config'])
         self._app['pipeline_tgt'] = Pipeline(config['pipeline_config_tgt'])
+        self._app['extended_model_path'] = extended_model_path
         self._app['lock'] = asyncio.Lock()
         self._app['sem'] = asyncio.Semaphore()
         self._app['ol'] = config['online_learning']['active']
-
-        if self._app['ol']:
-            if new_model_path:
-                self._app['new_model_path'] = new_model_path
-            else:
-                raise ValueError('Missing online learning path to new model.')
 
         self._app.router.add_post('/save', save)
         self._app.router.add_post('/train', train)
