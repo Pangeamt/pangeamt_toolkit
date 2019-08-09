@@ -27,7 +27,7 @@ class PangeanmtServer:
         self._app['nmt'] = Pangeanmt(extended_model_path) # config['model'] ?
         self._app['pipeline'] = Pipeline(config['pipeline_config'])
         self._app['pipeline_tgt'] = Pipeline(config['pipeline_config_tgt'])
-        self._app['extended_model_path'] = extended_model_path
+        self._app['model_path'] = model_path
         self._app['lock'] = asyncio.Lock()
         self._app['sem'] = asyncio.Semaphore()
         self._app['ol'] = config['online_learning']['active']
