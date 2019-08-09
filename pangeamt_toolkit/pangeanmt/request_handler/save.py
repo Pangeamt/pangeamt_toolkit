@@ -13,7 +13,8 @@ async def save(req):
             req = await req.json()
             list_path = extended_path.split('/')
             main_path = ('/').join(list_path[:-2])
-            path = main_path + f"/{list_path[-2]}_{req['name']}"
+            extend = '/extended_model'
+            path = main_path + f"/{list_path[-2]}_{req['name']}{extend}"
             nmt.save_model(path)
             resp = {
                 'rc': 0
