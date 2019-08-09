@@ -11,7 +11,9 @@ async def save(req):
             raise Exception('Online Learning is not active.')
         async with lock:
             req = await req.json()
-            path = ('/').join(extended_path.split('/')[:-1]) + f"_{req['name']}"
+            list_path = extended_path.split('/')
+            main_path = ('/').join(list_path[:-2])
+            path = main_path + f"/{list_path[-2]}_{req['name']}"
             nmt.save_model(path)
             resp = {
                 'rc': 0
