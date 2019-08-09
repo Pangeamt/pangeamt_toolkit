@@ -19,11 +19,11 @@ os.chdir(current_dir)
 class PangeanmtServer:
     def __init__(self, model_path):
         self._app = web.Application()
+        extended_model_path = model_path + "/extended_model"
         config_path = extended_model_path + '/config.json'
         with open(config_path, 'r') as file:
             config = json.loads(file.read())
 
-        extended_model_path = model_path + "/extended_model"
         self._app['nmt'] = Pangeanmt(extended_model_path) # config['model'] ?
         self._app['pipeline'] = Pipeline(config['pipeline_config'])
         self._app['pipeline_tgt'] = Pipeline(config['pipeline_config_tgt'])
