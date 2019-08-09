@@ -6,6 +6,7 @@ import asyncio
 from aiohttp import web
 from pangeamt_toolkit.pangeanmt.request_handler.save import save
 from pangeamt_toolkit.pangeanmt.request_handler.train import train
+from pangeamt_toolkit.pangeanmt.request_handler.ready import ready
 from pangeamt_toolkit.pangeanmt.request_handler.translate import translate
 from pangeamt_toolkit import Pipeline
 from pangeamt_toolkit.pangeanmt import Pangeanmt
@@ -37,6 +38,7 @@ class PangeanmtServer:
 
         self._app.router.add_post('/save', save)
         self._app.router.add_post('/train', train)
+        self._app.router.add_post('/isready', ready)
         self._app.router.add_post('/translate', translate)
 
     def start(self):

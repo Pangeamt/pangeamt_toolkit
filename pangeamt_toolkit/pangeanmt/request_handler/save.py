@@ -2,7 +2,7 @@ from aiohttp import web
 
 async def save(req):
     nmt = req.app['nmt']
-    new_model_dir = req.app['new_model_dir']
+    new_model_dir = req.app['new_model_path']
     lock = req.app['lock']
     ol = req.app['ol']
 
