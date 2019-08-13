@@ -26,4 +26,5 @@ for lang in langs:
         f'{args.data}/dev.{lang}': f'{args.data}/dev.{mods}.{lang}',
         f'{args.data}/test.{lang}': f'{args.data}/test.{mods}.{lang}'
     }
-    pipeline.preprocess_file(args.src_file, args.tgt_file)
+    for path in paths:
+        pipeline.preprocess_file(path, paths[path])
