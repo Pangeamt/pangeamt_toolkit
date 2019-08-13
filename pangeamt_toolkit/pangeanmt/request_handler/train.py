@@ -1,4 +1,5 @@
 from aiohttp import web
+import time
 
 async def train(req):
     nmt = req.app['nmt']
@@ -6,6 +7,7 @@ async def train(req):
     pipeline_tgt = req.app['pipeline_tgt']
     lock = req.app['lock']
     ol = req.app['ol']
+    log = req.app['train_log']
 
     try:
         if not ol:
@@ -14,10 +16,17 @@ async def train(req):
         async with lock:
             for tu in req['tus']:
                 src_preprocessed = pipeline.preprocess_str(tu['src'])
-                print(src_preprocessed)
                 tgt_preprocessed = pipeline_tgt.preprocess_str(tu['tgt'])
-                print(tgt_preprocessed)
-
+                named_tuple = time.localtime() # get struct_time
+                time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)
+                with open(log, 'a+') as file:
+                    words = ['source:', 'source_prep:', 'target:',
+                        'target_prep:', 'score:']
+                    file.write(f'{time_string}\n'\
+                        f'{words[0]:>13} {tu["src"]}\n'\
+                        f'{words[1]:>13} {src_preprocessed}\n'\
+                        f'{words[2]:>13} {tu["tgt"]}\n'\
+                        f'{words[3]:>13} {tgt_preprocessed}\n\n')
                 nmt.train(src_preprocessed, tgt_preprocessed)
         resp = {
             'rc': 0

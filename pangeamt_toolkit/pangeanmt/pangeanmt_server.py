@@ -21,6 +21,8 @@ class PangeanmtServer:
         self._app = web.Application()
         extended_model_path = model_path + "/extended_model"
         config_path = extended_model_path + '/config.json'
+        trans_log_path = model_path + '/log/trans_log.txt'
+        train_log_path = model_path + '/log/train_log.txt'
         with open(config_path, 'r') as file:
             config = json.loads(file.read())
 
@@ -31,6 +33,8 @@ class PangeanmtServer:
         self._app['lock'] = asyncio.Lock()
         self._app['sem'] = asyncio.Semaphore()
         self._app['ol'] = config['online_learning']['active']
+        self._app['trans_log'] = trans_log_path
+        self._app['train_log'] = train_log_path
 
         self._app.router.add_post('/save', save)
         self._app.router.add_post('/train', train)

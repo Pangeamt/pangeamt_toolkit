@@ -2,9 +2,12 @@ from sacremoses import MosesPunctNormalizer as _MosesNormalizer
 
 class MosesNormalizerProcessor:
 
-    def __init__(self, src_lang, tgt_lang):
+    def __init__(self, src_lang, tgt_lang=None):
         self._mn_src = _MosesNormalizer(lang=src_lang)
-        self._mn_tgt = _MosesNormalizer(lang=tgt_lang)
+        if tgt_lang:
+            self._mn_tgt = _MosesNormalizer(lang=tgt_lang)
+        else:
+            self._mn_tgt = None
 
     def preprocess(self, seg):
         """ Applies the MosesNormalizer to seg.src

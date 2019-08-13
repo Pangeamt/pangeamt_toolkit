@@ -7,7 +7,7 @@ from pangeamt_toolkit.processors import JiebaTokenizerProcessor\
 
 class GeneralTokenizerProcessor:
 
-    def __init__(self, src_lang, tgt_lang):
+    def __init__(self, src_lang, tgt_lang=None):
         if src_lang == 'ja':
             self._mtk = _Mecab()
         elif src_lang == 'ch':
@@ -19,8 +19,10 @@ class GeneralTokenizerProcessor:
             self._mdk = _Mecab()
         elif tgt_lang == 'ch':
             self._mdk = _Jieba()
-        else:
+        elif tgt_lang:
             self._mdk = _MosesDetokenizer(lang=tgt_lang)
+        else:
+            self._mdk = None
 
     def preprocess(self, seg):
         """ Applies the MosesTokenizer to seg.src
