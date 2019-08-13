@@ -30,6 +30,6 @@ for lang in langs:
         f'{args.data}/test.{lang}': f'{args.data}/test.{mods}.{lang}'
     }
     for path in paths:
-        print(f'Started processing {path.split('/')[-1]}')
+        print(f"Started processing {path.split('/')[-1]}")
         pipeline.preprocess_file(path, paths[path])
-        print(f'Finnished processing {path.split('/')[-1]}')
+        print(f"Finnished processing {path.split('/')[-1]}")
