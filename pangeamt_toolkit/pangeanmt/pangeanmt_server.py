@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import time
 import uvloop
 import asyncio
 from aiohttp import web
@@ -26,6 +27,13 @@ class PangeanmtServer:
         except:
             pass
         log_path = engine_path + '/log/log.txt'
+
+        with open(log_path, 'a+') as file:
+            named_tuple = time.localtime()
+            time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)
+            file.write(f'--Starting Server--\n'\
+                f'{time_string}\n\n')
+
         with open(config_path, 'r') as file:
             config = json.loads(file.read())
 

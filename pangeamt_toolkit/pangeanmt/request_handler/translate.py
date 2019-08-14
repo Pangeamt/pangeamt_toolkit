@@ -47,6 +47,7 @@ async def translate(req):
     except Exception as e:
         response_obj = {'status': 'failed', 'reason': str(e)}
         with open(log, 'a+') as file:
+            named_tuple = time.localtime()
             time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)
             file.write(f'--Failed Translation--\n'\
                 f'{time_string}\n'\
