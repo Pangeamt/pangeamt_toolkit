@@ -12,7 +12,7 @@ args = parser.parse_args()
 
 with open(args.config, 'r') as c_file:
     config = json.load(c_file)
-    processors = config['pipeline_config_tgt']
+    processors = config['pipeline_config']
 
 pipeline = Pipeline(processors)
 
