@@ -4,17 +4,18 @@ async def save(req):
     nmt = req.app['nmt']
     lock = req.app['lock']
     ol = req.app['ol']
-    model_path = req.app['model_path']
+    engine_path = req.app['engine_path']
 
     try:
         if not ol:
             raise Exception('Online Learning is not active.')
         async with lock:
             req = await req.json()
-            while model_path[-1] == '/':
-                model_path = model_path[:-1]
+            while engine_path[-1] == '/':
+                engine_path = engine_path[:-1]
+            engine_folder = ('/').join(engine_path.split('/')[:-1])
             extend = '/extended_model'
-            path = f"/{model_path}_{req['name']}{extend}"
+            path = f"/{engine_folder}/{req['name']}{extend}"
             nmt.save_model(path)
             resp = {
                 'rc': 0

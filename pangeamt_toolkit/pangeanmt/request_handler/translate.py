@@ -7,7 +7,7 @@ async def translate(req):
     pipeline = req.app['pipeline']
     lock = req.app['lock']
     sem = req.app['sem']
-    log = req.app['trans_log']
+    log = req.app['log_path']
 
     try:
         req = await req.json()
@@ -33,7 +33,8 @@ async def translate(req):
             with open(log, 'a+') as file:
                 words = ['source:', 'source_prep:', 'translation:',
                     'translation_post:', 'score:']
-                file.write(f'{time_string}\n'\
+                file.write(f'----Translating----\n'\
+                    f'{time_string}\n'\
                     f'{words[0]:>17} {seg.src_raw}\n'\
                     f'{words[1]:>17} {seg.src}\n'\
                     f'{words[2]:>17} {seg.tgt_raw}\n'\

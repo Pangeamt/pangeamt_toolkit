@@ -17,24 +17,26 @@ current_dir = os.path.abspath(os.path.dirname(__file__))
 os.chdir(current_dir)
 
 class PangeanmtServer:
-    def __init__(self, model_path):
+    def __init__(self, engine_path):
         self._app = web.Application()
-        extended_model_path = model_path + "/extended_model"
-        config_path = extended_model_path + '/config.json'
-        trans_log_path = model_path + '/log/trans_log.txt'
-        train_log_path = model_path + '/log/train_log.txt'
+        model_path = engine_path + "/extended_model"
+        config_path = model_path + '/config.json'
+        try:
+            os.mkdir(f'{engine_path}/log')
+        except:
+            pass
+        log_path = engine_path + '/log/log.txt'
         with open(config_path, 'r') as file:
             config = json.loads(file.read())
 
-        self._app['nmt'] = Pangeanmt(extended_model_path) # config['model'] ?
+        self._app['nmt'] = Pangeanmt(model_path) # config['model'] ?
         self._app['pipeline'] = Pipeline(config['pipeline_config'])
         self._app['pipeline_tgt'] = Pipeline(config['pipeline_config_tgt'])
-        self._app['model_path'] = model_path
+        self._app['engine_path'] = engine_path
         self._app['lock'] = asyncio.Lock()
         self._app['sem'] = asyncio.Semaphore()
         self._app['ol'] = config['online_learning']['active']
-        self._app['trans_log'] = trans_log_path
-        self._app['train_log'] = train_log_path
+        self._app['log_path'] = log_path
 
         self._app.router.add_post('/save', save)
         self._app.router.add_post('/train', train)

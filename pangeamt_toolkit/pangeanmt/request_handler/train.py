@@ -7,7 +7,7 @@ async def train(req):
     pipeline_tgt = req.app['pipeline_tgt']
     lock = req.app['lock']
     ol = req.app['ol']
-    log = req.app['train_log']
+    log = req.app['log_path']
 
     try:
         if not ol:
@@ -22,7 +22,8 @@ async def train(req):
                 with open(log, 'a+') as file:
                     words = ['source:', 'source_prep:', 'target:',
                         'target_prep:', 'score:']
-                    file.write(f'{time_string}\n'\
+                    file.write(f'----Training----\n'\
+                        f'{time_string}\n'\
                         f'{words[0]:>13} {tu["src"]}\n'\
                         f'{words[1]:>13} {src_preprocessed}\n'\
                         f'{words[2]:>13} {tu["tgt"]}\n'\
