@@ -34,17 +34,45 @@ class Pipeline:
                 str = process.preprocess_str(str)
         return str
 
-    def preprocess_file(self, src_path, tgt_path):
+    def preprocess_file(self, src_path, tgt_path=None):
+        if tgt_path:
+            with open(src_path, 'r') as src_file:
+                with open(tgt_path, 'w+') as tgt_file:
+                    for line in src_file.readlines():
+                        line = self.preprocess_str(line)
+                        if line[-1:] == '\n':
+                            tgt_file.write(line)
+                        else:
+                            tgt_file.write(line + '\n')
+        else:
+            src_path_list = src_path.split('/')
+            src_mods = src_path_list[-1].split('.')[1:-1]
+            src_name_raw = src_path_list[-1].split('.')[0]
+            src_lang = src_path_list[-1].split('.')[-1]
+            path = ('/').join(src_path_list[:-1])
+            for process in self._processes:
+                if process.mod not in src_mods:
+                    src_mods.append(process.mod)
+                    tgt_path = f"{path}/{src_name_raw}.{('.').join(src_mods)}."\
+                        f'{src_lang}'
+                    self._preprocess_file(process, src_path, tgt_path)
+                    src_path = tgt_path
+                else:
+                    pass
+
+
+    def _preprocess_file(self, process, src_path, tgt_path):
         with open(src_path, 'r') as src_file:
             with open(tgt_path, 'w+') as tgt_file:
                 for line in src_file.readlines():
-                    line = self.preprocess_str(line)
-                    #line = _sub('\.', '.\n', line)
+                    try:
+                        line, _ = process.preprocess_str(line)
+                    except:
+                        line = process.preprocess_str(line)
                     if line[-1:] == '\n':
                         tgt_file.write(line)
                     else:
                         tgt_file.write(line + '\n')
-
 
     def postprocess(self, seg):
         processes = self._processes[::-1]

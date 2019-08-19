@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
+import os
 import json
 import argparse
+from multiprocessing import Process
 from pangeamt_toolkit.processors import Pipeline
 
 parser = argparse.ArgumentParser(description='Preprocess file.')
@@ -16,20 +18,49 @@ langs = [args.src, args.tgt]
 
 with open(args.config, 'r') as config_file:
     config = json.load(config_file)
+    print('Loading pipelines..')
     pipelines = {
             args.src: Pipeline(config['pipeline_config']),
             args.tgt: Pipeline(config['pipeline_config_tgt'])
         }
+    print('Pipelines loaded..')
+
+def process(lang, pipelines):
+    pipeline = pipelines[lang]
+
+    train_paths = [f'{args.data}/train.norm.tok.truecase.bpe.{lang}',
+    f'{args.data}/train.norm.tok.truecase.{lang}',
+    f'{args.data}/train.norm.tok.{lang}',
+    f'{args.data}/train.norm.{lang}', f'{args.data}/train.{lang}']
+
+    dev_paths = [f'{args.data}/dev.norm.tok.truecase.bpe.{lang}',
+    f'{args.data}/dev.norm.tok.truecase.{lang}',
+    f'{args.data}/dev.norm.tok.{lang}',
+    f'{args.data}/dev.norm.{lang}', f'{args.data}/dev.{lang}']
+
+    test_paths = [f'{args.data}/test.norm.tok.truecase.bpe.{lang}',
+    f'{args.data}/test.norm.tok.truecase.{lang}',
+    f'{args.data}/test.norm.tok.{lang}',
+    f'{args.data}/test.norm.{lang}', f'{args.data}/test.{lang}']
+
+    paths = [train_paths, dev_paths, test_paths]
+
+    for path_group in paths:
+        for path in path_group:
+            if os.path.isfile(path):
+                print(f"Started processing {path.split('/')[-1]}")
+                pipeline.preprocess_file(path)
+                print(f"Finished processing {path.split('/')[-1]}")
+                break
+            else:
+                pass
+
+to_join = []
 
 for lang in langs:
-    pipeline = pipelines[lang]
-    mods = 'norm.tok.truecase.bpe'
-    paths = {
-        f'{args.data}/train.{lang}': f'{args.data}/train.{mods}.{lang}',
-        f'{args.data}/dev.{lang}': f'{args.data}/dev.{mods}.{lang}',
-        f'{args.data}/test.{lang}': f'{args.data}/test.{mods}.{lang}'
-    }
-    for path in paths:
-        print(f"Started processing {path.split('/')[-1]}")
-        pipeline.preprocess_file(path, paths[path])
-        print(f"Finnished processing {path.split('/')[-1]}")
+    p = Process(target=process, args=(lang, pipelines,))
+    p.start()
+    to_join.append(p)
+
+for p in to_join:
+    p.join()

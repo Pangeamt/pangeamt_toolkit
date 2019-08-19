@@ -4,9 +4,14 @@ class JiebaTokenizerProcessor:
 
     @staticmethod
     def tokenize(str, escape=None):
+        self._mod = 'tok'
         """ Applies jieba tokenization to str
         """
         return list(_jieba.cut(str))
+
+    def get_mod(self):
+        return self._mod
+    mod = property(get_mod)
 
     @staticmethod
     def detokenize(str_array):

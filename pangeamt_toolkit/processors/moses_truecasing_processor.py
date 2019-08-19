@@ -5,8 +5,13 @@ from pangeamt_toolkit.seg import SegCase
 class MosesTruecasingProcessor:
 
     def __init__(self, model):
+        self._mod = 'truecase'
         self._mtr = _MosesTruecaser(model)
         self._mdr = _MosesDetruecaser()
+
+    def get_mod(self):
+        return self._mod
+    mod = property(get_mod)
 
     def preprocess(self, seg):
         """ Checks if the seg.src string is writen in lowercase, uppercase

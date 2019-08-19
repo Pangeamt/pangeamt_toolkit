@@ -7,6 +7,7 @@ import codecs as _codecs
 class BPEProcessor:
 
     def __init__(self, bpe_codes, bpe_vocab=None, bpe_threshold=None):
+        self._mod = 'bpe'
         if bpe_vocab:
             _vocab = \
                 _rv(_codecs.open(bpe_vocab, encoding='utf-8'), bpe_threshold)
@@ -14,6 +15,10 @@ class BPEProcessor:
                 vocab=_vocab)
         else:
             self._bpe = _BPE(_codecs.open(bpe_codes, encoding='utf-8'))
+
+    def get_mod(self):
+        return self._mod
+    mod = property(get_mod)
 
     def preprocess(self, seg):
         '''Apply BPE to seg.src
