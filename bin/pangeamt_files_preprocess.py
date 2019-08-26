@@ -46,9 +46,10 @@ def main(args):
     langs = [args.src, args.tgt]
     to_join = []
 
+    # loads the pipelines
+    pipelines = _load_pipelines(args.config, args.src, args.tgt)
+
     for lang in langs:
-        # loads the pipelines
-        pipelines = _load_pipelines(args.config, args.src, args.tgt)
         # Creates and spawns a process to parallelise the preprocess
         p = Process(target=_process, args=(lang, pipelines,))
         p.start()
