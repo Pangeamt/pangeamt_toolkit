@@ -1,3 +1,4 @@
+import os
 import yaml as _yaml
 from re import sub as _sub
 
@@ -62,17 +63,20 @@ class Pipeline:
 
 
     def _preprocess_file(self, process, src_path, tgt_path):
-        with open(src_path, 'r') as src_file:
-            with open(tgt_path, 'w+') as tgt_file:
-                for line in src_file.readlines():
-                    try:
-                        line, _ = process.preprocess_str(line)
-                    except:
-                        line = process.preprocess_str(line)
-                    if line[-1:] == '\n':
-                        tgt_file.write(line)
-                    else:
-                        tgt_file.write(line + '\n')
+        if os.path.exists(tgt_path):
+            pass
+        else:
+            with open(src_path, 'r') as src_file:
+                with open(tgt_path, 'w+') as tgt_file:
+                    for line in src_file.readlines():
+                        try:
+                            line, _ = process.preprocess_str(line)
+                        except:
+                            line = process.preprocess_str(line)
+                        if line[-1:] == '\n':
+                            tgt_file.write(line)
+                        else:
+                            tgt_file.write(line + '\n')
 
     def postprocess(self, seg):
         processes = self._processes[::-1]

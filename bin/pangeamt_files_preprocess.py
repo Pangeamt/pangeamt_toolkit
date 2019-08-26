@@ -28,32 +28,16 @@ with open(args.config, 'r') as config_file:
 def process(lang, pipelines):
     pipeline = pipelines[lang]
 
-    train_paths = [f'{args.data}/train.norm.tok.truecase.bpe.{lang}',
-    f'{args.data}/train.norm.tok.truecase.{lang}',
-    f'{args.data}/train.norm.tok.{lang}',
-    f'{args.data}/train.norm.{lang}', f'{args.data}/train.{lang}']
+    files = ['train', 'dev', 'test']
 
-    dev_paths = [f'{args.data}/dev.norm.tok.truecase.bpe.{lang}',
-    f'{args.data}/dev.norm.tok.truecase.{lang}',
-    f'{args.data}/dev.norm.tok.{lang}',
-    f'{args.data}/dev.norm.{lang}', f'{args.data}/dev.{lang}']
-
-    test_paths = [f'{args.data}/test.norm.tok.truecase.bpe.{lang}',
-    f'{args.data}/test.norm.tok.truecase.{lang}',
-    f'{args.data}/test.norm.tok.{lang}',
-    f'{args.data}/test.norm.{lang}', f'{args.data}/test.{lang}']
-
-    paths = [train_paths, dev_paths, test_paths]
-
-    for path_group in paths:
-        for path in path_group:
-            if os.path.isfile(path):
-                print(f"Started processing {path.split('/')[-1]}")
-                pipeline.preprocess_file(path)
-                print(f"Finished processing {path.split('/')[-1]}")
-                break
-            else:
-                pass
+    for file in files:
+        path = f'{args.data}/{file}.{lang}'
+        if os.path.isfile(path):
+            print(f"Started processing {path.split('/')[-1]}")
+            pipeline.preprocess_file(path)
+            print(f"Finished processing {path.split('/')[-1]}")
+        else:
+            pass
 
 to_join = []
 
