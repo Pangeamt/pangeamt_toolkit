@@ -39,7 +39,7 @@ class Pipeline:
         if tgt_path:
             with open(src_path, 'r') as src_file:
                 with open(tgt_path, 'w+') as tgt_file:
-                    for line in src_file.readlines():
+                    for line in src_file:
                         line = self.preprocess_str(line)
                         if line[-1:] == '\n':
                             tgt_file.write(line)
@@ -68,7 +68,7 @@ class Pipeline:
         else:
             with open(src_path, 'r') as src_file:
                 with open(tgt_path, 'w+') as tgt_file:
-                    for line in src_file.readlines():
+                    for line in src_file:
                         try:
                             line, _ = process.preprocess_str(line)
                         except:
@@ -92,7 +92,7 @@ class Pipeline:
     def postprocess_file(self, src_path, tgt_path):
         with open(src_path, 'r') as src_file:
             with open(tgt_path, 'w+') as tgt_file:
-                for line in src_file.readlines():
+                for line in src_file:
                     line = self.postprocess_str(line)
                     tgt_file.write(line + '\n')
 

@@ -6,16 +6,15 @@ import argparse
 from multiprocessing import Process
 from pangeamt_toolkit.processors import Pipeline
 
-parser = argparse.ArgumentParser(description='Preprocess file.')
-parser.add_argument('data', help="Path to data folder")
-parser.add_argument('src', help='Src lang')
-parser.add_argument('tgt', help='Tgt lang')
+def _get_parser():
+    parser = argparse.ArgumentParser(description='Preprocess file.')
+    parser.add_argument('data', help="Path to data folder")
+    parser.add_argument('src', help='Src lang')
+    parser.add_argument('tgt', help='Tgt lang')
+    return parser
 
-args = parser.parse_args()
-
-langs = [args.src, args.tgt]
-
-def config_builder(lang):
+# Builds a config for applying only norm and tok
+def _config_builder(lang):
     return [
         {
             'name': 'normalizer',
@@ -27,29 +26,39 @@ def config_builder(lang):
         }
     ]
 
-src_config = config_builder(args.src)
-pipeline_src = Pipeline(src_config)
-
-tgt_config = config_builder(args.tgt)
-pipeline_tgt = Pipeline(tgt_config)
-
-pipelines = {args.src: pipeline_src, args.tgt: pipeline_tgt}
-
-def process(lang, pipelines):
+def _process(path, lang, pipelines):
     pipeline = pipelines[lang]
-    path = f'{args.data}/train.{lang}'
-    if os.path.isfile(path):
-        print(f"Started processing {path.split('/')[-1]}..")
-        pipeline.preprocess_file(path)
-        print(f"Finished processing {path.split('/')[-1]}..")
+    complete_path = f'{path}/train.{lang}'
+    if os.path.isfile(complete_path):
+        print(f"Started processing {complete_path.split('/')[-1]}..")
+        pipeline.preprocess_file(complete_path)
+        print(f"Finished processing {complete_path.split('/')[-1]}..")
     else:
-        raise Exception(f'Missing {path} file')
+        raise Exception(f'Missing {complete_path} file')
 
-to_join = []
-for lang in langs:
-    p = Process(target=process, args=(lang, pipelines,))
-    p.start()
-    to_join.append(p)
+def main(args):
 
-for p in to_join:
-    p.join()
+    langs = [args.src, args.tgt]
+
+    src_config = _config_builder(args.src)
+    pipeline_src = Pipeline(src_config)
+
+    tgt_config = _config_builder(args.tgt)
+    pipeline_tgt = Pipeline(tgt_config)
+
+    pipelines = {args.src: pipeline_src, args.tgt: pipeline_tgt}
+
+    to_join = []
+    for lang in langs:
+        p = Process(target=_process, args=(args.data, lang, pipelines,))
+        p.start()
+        to_join.append(p)
+
+    for p in to_join:
+        p.join()
+
+if __name__ == "__main__":
+    parser = _get_parser()
+    args = parser.parse_args()
+
+    main(args)

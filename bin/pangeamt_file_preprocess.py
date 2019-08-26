@@ -3,16 +3,27 @@ import json
 import argparse
 from pangeamt_toolkit.processors import Pipeline
 
-parser = argparse.ArgumentParser(description='Preprocess file.')
-parser.add_argument('config', help='Path to config file.')
-parser.add_argument('src_file', help='Path to src file.')
+# Preprocess a single file. The output file's name is composed with the
+# name mods from the processors. Loads main config.
 
-args = parser.parse_args()
+def _get_parser():
+    parser = argparse.ArgumentParser(description='Preprocess file.')
+    parser.add_argument('config', help='Path to config file.')
+    parser.add_argument('src_file', help='Path to src file.')
+    return parser
 
-with open(args.config, 'r') as c_file:
-    config = json.load(c_file)
-    processors = config['pipeline_config']
+def main(args):
+    # Loads the main pipeline config from the config file
+    with open(args.config, 'r') as c_file:
+        config = json.load(c_file)
+        processors = config['pipeline_config']
 
-pipeline = Pipeline(processors)
+    pipeline = Pipeline(processors)
 
-pipeline.preprocess_file(args.src_file)
+    pipeline.preprocess_file(args.src_file)
+
+if __name__ == "__main__":
+    parser = _get_parser()
+    args = parser.parse_args()
+
+    main(args)
