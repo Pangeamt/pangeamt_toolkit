@@ -1,5 +1,6 @@
 from pangeamt_toolkit.processors.bpe_processor import BPEProcessor
 from pangeamt_toolkit.processors.processors_pipeline import Pipeline
+from pangeamt_toolkit.processors.placeholder_processor import PlaceholderProcessor
 from pangeamt_toolkit.processors.jieba_tokenizer_processor import JiebaTokenizerProcessor
 from pangeamt_toolkit.processors.mecab_tokenizer_processor import MecabTokenizerProcessor
 from pangeamt_toolkit.processors.moses_tokenizer_processor import MosesTokenizerProcessor

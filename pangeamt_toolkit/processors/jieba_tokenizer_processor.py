@@ -2,35 +2,31 @@ import jieba as _jieba
 
 class JiebaTokenizerProcessor:
 
-    @staticmethod
-    def tokenize(str, escape=None):
+    def __init__(self):
         self._mod = 'tok'
-        """ Applies jieba tokenization to str
-        """
-        return list(_jieba.cut(str))
 
     def get_mod(self):
         return self._mod
     mod = property(get_mod)
 
-    @staticmethod
-    def detokenize(str_array):
+    def tokenize(self, str, escape=None):
+        """ Applies jieba tokenization to str
+        """
+        return list(_jieba.cut(str))
+
+    def detokenize(self, str_array):
         """ Joins str_array
         """
         return ('').join(str_array)
 
-    @staticmethod
-    def preprocess(seg):
-        seg.src = JiebaTokenizerProcessor.tokenize(seg.src)
+    def preprocess(self, seg):
+        seg.src = self.tokenize(seg.src)
 
-    @staticmethod
-    def preprocess_str(seg):
-        return JiebaTokenizerProcessor.tokenize(str)
+    def preprocess_str(self, seg):
+        return self.tokenize(str)
 
-    @staticmethod
-    def postprocess(seg):
-        seg.tgt = JiebaTokenizerProcessor.detokenize(seg.tgt)
+    def postprocess(self, seg):
+        seg.tgt = self.detokenize(seg.tgt)
 
-    @staticmethod
-    def postprocess_str(str):
-        return JiebaTokenizerProcessor.detokenize(str)
+    def postprocess_str(self, str):
+        return self.detokenize(str)

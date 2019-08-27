@@ -25,5 +25,5 @@ class MosesTokenizerProcessor:
         """
         seg.tgt = self._mdk.detokenize(seg.tgt.split(' '))
 
-    def postprocess(self, str):
+    def postprocess_str(self, str):
         return self._mdk.detokenize(str.split(' '))

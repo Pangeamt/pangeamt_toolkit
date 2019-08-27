@@ -130,5 +130,11 @@ class Pipeline:
         'bpe':{
             'class': 'BPEProcessor',
             'path': 'pangeamt_toolkit.processors.bpe_processor'
+        },
+
+        'placeholder':{
+            'class': 'PlaceholderProcessor',
+            'path': 'pangeamt_toolkit.processors.placeholder_processor'
         }
+
     }

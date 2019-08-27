@@ -7,4 +7,5 @@ from pangeamt_toolkit.processors import MosesTokenizerProcessor
 from pangeamt_toolkit.processors import MosesTruecasingProcessor
 from pangeamt_toolkit.processors import MosesNormalizerProcessor
 from pangeamt_toolkit.processors import GeneralTokenizerProcessor
+from pangeamt_toolkit.processors import PlaceholderProcessor
 from pangeamt_toolkit.pangeanmt import Pangeanmt, PangeanmtServer
