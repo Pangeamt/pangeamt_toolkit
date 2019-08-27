@@ -19,10 +19,8 @@ class PlaceholderProcessor:
     def preprocess_str(self, str):
         placeholders = self._r.findall(str)
         to_sub = {ph: re.sub(' ', '_', ph) for ph in placeholders}
-        print('to_sub: ', to_sub)
         for placeholder in to_sub:
             str = re.sub(placeholder, to_sub[placeholder], str)
-            print(str)
         return str
 
     def postprocess(self, seg):
