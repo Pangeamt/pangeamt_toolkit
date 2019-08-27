@@ -6,13 +6,16 @@ import codecs as _codecs
 
 class BPEProcessor:
 
-    def __init__(self, bpe_codes, bpe_vocab=None, bpe_threshold=None):
+    def __init__(self, bpe_codes, bpe_vocab=None, bpe_threshold=None,
+            bpe_glossaries=None):
         self._mod = 'bpe'
+        if not bpe_glossaries:
+            bpe_glossaries = []
         if bpe_vocab:
             _vocab = \
                 _rv(_codecs.open(bpe_vocab, encoding='utf-8'), bpe_threshold)
             self._bpe = _BPE(_codecs.open(bpe_codes, encoding='utf-8'),\
-                vocab=_vocab)
+                vocab=_vocab, glossaries=bpe_glossaries)
         else:
             self._bpe = _BPE(_codecs.open(bpe_codes, encoding='utf-8'))
 
