@@ -25,13 +25,13 @@ class PlaceholderProcessor:
 
     def postprocess(self, seg):
         placeholders = self._r.findall(seg.tgt)
-        to_sub = {ph: re.sub('_', ' ', ph) for ph in placeholders}
+        to_sub = {ph: re.sub('_', '', ph) for ph in placeholders}
         for placeholder in to_sub:
             seg.tgt = re.sub(placeholder, to_sub[placeholder], seg.tgt)
 
     def postprocess_str(self, str):
         placeholders = self._r.findall(str)
-        to_sub = {ph: re.sub('_', ' ', ph) for ph in placeholders}
+        to_sub = {ph: re.sub('_', '', ph) for ph in placeholders}
         for placeholder in to_sub:
             str = re.sub(placeholder, to_sub[placeholder], str)
         return str
