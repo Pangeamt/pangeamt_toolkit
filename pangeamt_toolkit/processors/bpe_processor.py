@@ -11,17 +11,22 @@ class BPEProcessor:
         self._mod = 'bpe'
         if bpe_glossaries == None:
             bpe_glossaries = []
+        else:
+            _glossaries = [self._parse_glossary(i) for i in bpe_glossaries]
         if bpe_vocab:
             _vocab = \
                 _rv(_codecs.open(bpe_vocab, encoding='utf-8'), bpe_threshold)
             self._bpe = _BPE(_codecs.open(bpe_codes, encoding='utf-8'),\
-                vocab=_vocab, glossaries=bpe_glossaries)
+                vocab=_vocab, glossaries=_glossaries)
         else:
             self._bpe = _BPE(_codecs.open(bpe_codes, encoding='utf-8'))
 
     def get_mod(self):
         return self._mod
     mod = property(get_mod)
+
+    def _parse_glossary(self, str):
+        return str.encode('utf-8').decode('utf-8')
 
     def preprocess(self, seg):
         '''Apply BPE to seg.src
