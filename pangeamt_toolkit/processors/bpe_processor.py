@@ -6,10 +6,10 @@ import codecs as _codecs
 
 class BPEProcessor:
 
-    def __init__(self, bpe_codes, bpe_vocab=None, bpe_threshold=None,
+    def __init__(self, bpe_codes, bpe_vocab=None, bpe_threshold=None,\
             bpe_glossaries=None):
         self._mod = 'bpe'
-        if not bpe_glossaries:
+        if bpe_glossaries == None:
             bpe_glossaries = []
         if bpe_vocab:
             _vocab = \
@@ -26,10 +26,10 @@ class BPEProcessor:
     def preprocess(self, seg):
         '''Apply BPE to seg.src
         '''
-        seg.src = self._bpe.segment(seg.src)
+        seg.src = self._bpe.process_line(seg.src)
 
     def preprocess_str(self, str):
-        return self._bpe.segment(str)
+        return self._bpe.process_line(str)
 
     def postprocess(self, seg):
         '''Remove BPE from seg.tgt
