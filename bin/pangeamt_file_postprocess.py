@@ -14,11 +14,20 @@ def _get_parser():
 def main(args):
     with open(args.config, 'r') as c_file:
         config = json.load(c_file)
-        processors = config['pipeline_config']
+        processors = get_processors(config)
 
     pipeline = Pipeline(processors)
 
     pipeline.postprocess_file(args.src_file, args.tgt_file)
+
+def get_processors(config):
+    processors = config['pipeline_config']
+    if config['tgt_lang'] in ['ja', 'ch']:
+        for i, processor in enumerate(processors):
+            if processor['name'] == 'tokenize':
+                processors.pop(i)
+                return processors
+    return processors
 
 if __name__ == "__main__":
     parser = _get_parser()
