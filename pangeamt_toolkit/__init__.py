@@ -8,4 +8,6 @@ from pangeamt_toolkit.processors import MosesTruecasingProcessor
 from pangeamt_toolkit.processors import MosesNormalizerProcessor
 from pangeamt_toolkit.processors import GeneralTokenizerProcessor
 from pangeamt_toolkit.processors import PlaceholderProcessor
+from pangeamt_toolkit.processors import PunctProcessor
+from pangeamt_toolkit.processors import JapaneseNormalizerProcessor
 from pangeamt_toolkit.pangeanmt import Pangeanmt, PangeanmtServer

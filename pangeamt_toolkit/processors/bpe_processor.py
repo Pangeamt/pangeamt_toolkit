@@ -10,7 +10,7 @@ class BPEProcessor:
             bpe_glossaries=None):
         self._mod = 'bpe'
         if bpe_glossaries == None:
-            bpe_glossaries = []
+            _glossaries = []
         else:
             _glossaries = [self._parse_glossary(i) for i in bpe_glossaries]
         if bpe_vocab:

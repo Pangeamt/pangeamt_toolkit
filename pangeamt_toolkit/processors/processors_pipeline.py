@@ -135,6 +135,15 @@ class Pipeline:
         'placeholder':{
             'class': 'PlaceholderProcessor',
             'path': 'pangeamt_toolkit.processors.placeholder_processor'
-        }
+        },
 
+        'punct':{
+            'class': 'PunctProcessor',
+            'path': 'pangeamt_toolkit.processors.punct_processor'
+        },
+
+        'japanese_normalizer':{
+            'class': 'JapaneseNormalizerProcessor',
+            'path': 'pangeamt_toolkit.processors.japanese_normalizer_processor'
+        },
     }
