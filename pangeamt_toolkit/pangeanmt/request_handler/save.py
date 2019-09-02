@@ -12,9 +12,8 @@ async def save(req):
         if not ol:
             raise Exception('Online Learning is not active.')
         async with lock:
-            req = await req.json()
             extend = '/extended_model'
-            path = f"/{engine_path}{extend}"
+            path = f"/{engine_path}{extend}_tmp"
             nmt.save_model(path)
             time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)
             with open(log, 'a+') as file:
