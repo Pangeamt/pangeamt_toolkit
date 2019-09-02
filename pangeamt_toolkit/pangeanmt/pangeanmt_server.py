@@ -22,7 +22,7 @@ class PangeanmtServer:
         self._app = web.Application()
         model_path = engine_path + "/extended_model"
         config_path = model_path + '/config.json'
-        log_path = set_up_log(engine_path)
+        log_path = self._set_up_log(engine_path)
 
         with open(log_path, 'a+') as file:
             named_tuple = time.localtime()
@@ -50,7 +50,7 @@ class PangeanmtServer:
     def start(self):
         web.run_app(self._app, port=8081)
 
-    def set_up_log(self, engine_path):
+    def _set_up_log(self, engine_path):
         while engine_path[-1] == '/':
             engine_path = engine_path[:-1]
         model_name = engine_path.split('/')[-1]
