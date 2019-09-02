@@ -55,7 +55,8 @@ class PangeanmtServer:
             engine_path = engine_path[:-1]
         model_name = engine_path.split('/')[-1]
         log_name = f'log_{model_name}.txt'
-        logs_dir = f'{engine_path}/../logs'
+        logs_dir = f'{("/").join(engine_path.split("/")[:-1])}/logs/'
+        print(logs_dir)
         try:
             os.mkdir(logs_dir)
         except:
