@@ -4,9 +4,12 @@ from pangeamt_toolkit.seg import SegCase
 
 class MosesTruecasingProcessor:
 
-    def __init__(self, model):
+    def __init__(self, model=None):
         self._mod = 'truecase'
-        self._mtr = _MosesTruecaser(model)
+        if model:
+            self._mtr = _MosesTruecaser(model)
+        else:
+            self._mtr = None
         self._mdr = _MosesDetruecaser()
 
     def get_mod(self):
@@ -24,16 +27,26 @@ class MosesTruecasingProcessor:
             seg.src_case = SegCase.LOWER
         else:
             seg.src_case = SegCase.MIXED
-
-        seg.src = (' ').join(self._mtr.truecase(seg.src))
+        if self._mtr:
+            seg.src = (' ').join(self._mtr.truecase(seg.src))
+        else:
+            seg.src = seg.src
 
     def preprocess_str(self, str):
-        if str.isupper():
-            return (' ').join(self._mtr.truecase(str)), SegCase.UPPER
-        elif str.islower():
-            return (' ').join(self._mtr.truecase(str)), SegCase.LOWER
+        if self._mtr:
+            if str.isupper():
+                return (' ').join(self._mtr.truecase(str)), SegCase.UPPER
+            elif str.islower():
+                return (' ').join(self._mtr.truecase(str)), SegCase.LOWER
+            else:
+                return (' ').join(self._mtr.truecase(str)), SegCase.MIXED
         else:
-            return (' ').join(self._mtr.truecase(str)), SegCase.MIXED
+            if str.isupper():
+                return str, SegCase.UPPER
+            elif str.islower():
+                return str, SegCase.LOWER
+            else:
+                return str, SegCase.MIXED
 
     def postprocess(self, seg):
         """ Modifies seg.tgt according to seg.src_case.
