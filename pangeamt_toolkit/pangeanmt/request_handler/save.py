@@ -13,11 +13,8 @@ async def save(req):
             raise Exception('Online Learning is not active.')
         async with lock:
             req = await req.json()
-            while engine_path[-1] == '/':
-                engine_path = engine_path[:-1]
-            engine_folder = ('/').join(engine_path.split('/')[:-1])
             extend = '/extended_model'
-            path = f"/{engine_folder}/{req['name']}{extend}"
+            path = f"/{engine_path}{extend}"
             nmt.save_model(path)
             time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)
             with open(log, 'a+') as file:
