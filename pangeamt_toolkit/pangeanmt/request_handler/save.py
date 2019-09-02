@@ -15,6 +15,7 @@ async def save(req):
             extend = '/extended_model'
             path = f"/{engine_path}{extend}_tmp"
             nmt.save_model(path)
+            named_tuple = time.localtime()
             time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)
             with open(log, 'a+') as file:
                 words = ['new_name:']
