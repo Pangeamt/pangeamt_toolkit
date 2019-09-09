@@ -11,14 +11,14 @@ class GeneralTokenizerProcessor:
         self._mod = 'tok'
         if src_lang == 'ja':
             self._mtk = _Mecab()
-        elif src_lang == 'ch':
+        elif src_lang == 'zh':
             self._mtk = _Jieba()
         else:
             self._mtk = _MosesTokenizer(lang=src_lang)
 
         if tgt_lang == 'ja':
             self._mdk = _Mecab()
-        elif tgt_lang == 'ch':
+        elif tgt_lang == 'zh':
             self._mdk = _Jieba()
         elif tgt_lang:
             self._mdk = _MosesDetokenizer(lang=tgt_lang)
