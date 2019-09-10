@@ -4,14 +4,14 @@ import os
 import signal
 import torch
 
-import pangeamt_toolkit.onmt.opts as opts
-import pangeamt_toolkit.onmt.utils.distributed
+import onmt.opts as opts
+import onmt.utils.distributed
 
-from pangeamt_toolkit.onmt.utils.misc import set_random_seed
-from pangeamt_toolkit.onmt.utils.logging import init_logger, logger
-from pangeamt_toolkit.onmt.train_single import main as single_main
-from pangeamt_toolkit.onmt.utils.parse import ArgumentParser
-from pangeamt_toolkit.onmt.inputters.inputter import build_dataset_iter, \
+from onmt.utils.misc import set_random_seed
+from onmt.utils.logging import init_logger, logger
+from onmt.train_single import main as single_main
+from onmt.utils.parse import ArgumentParser
+from onmt.inputters.inputter import build_dataset_iter, \
     load_old_vocab, old_style_vocab, build_dataset_iter_multiple
 
 from itertools import cycle
@@ -135,7 +135,7 @@ def batch_producer(generator_to_serve, queues, semaphore, opt):
 def run(opt, device_id, error_queue, batch_queue, semaphore):
     """ run process """
     try:
-        gpu_rank = pangeamt_toolkit.onmt.utils.distributed.multi_init(opt,\
+        gpu_rank = onmt.utils.distributed.multi_init(opt,\
             device_id)
         if gpu_rank != opt.gpu_ranks[device_id]:
             raise AssertionError("An error occurred in \

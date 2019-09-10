@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 import json
 import os
-from pangeamt_toolkit.onmt.opts import train_opts as _train_opts, translate_opts as _translate_opts, model_opts as _model_opts
-from pangeamt_toolkit.onmt.utils.parse import ArgumentParser
+from onmt.opts import train_opts as _train_opts, translate_opts as _translate_opts, model_opts as _model_opts
+from onmt.utils.parse import ArgumentParser
 
 
 

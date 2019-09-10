@@ -1,4 +1,3 @@
-import pangeamt_toolkit.onmt
 from pangeamt_toolkit.seg import Seg
 from pangeamt_toolkit.processors import BPEProcessor, Pipeline
 from pangeamt_toolkit.processors import JiebaTokenizerProcessor

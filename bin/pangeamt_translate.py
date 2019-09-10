@@ -4,12 +4,12 @@
 from __future__ import unicode_literals
 from itertools import repeat
 
-from pangeamt_toolkit.onmt.utils.logging import init_logger
-from pangeamt_toolkit.onmt.utils.misc import split_corpus
-from pangeamt_toolkit.onmt.translate.translator import build_translator
+from onmt.utils.logging import init_logger
+from onmt.utils.misc import split_corpus
+from onmt.translate.translator import build_translator
 
-import pangeamt_toolkit.onmt.opts as opts
-from pangeamt_toolkit.onmt.utils.parse import ArgumentParser
+import onmt.opts as opts
+from onmt.utils.parse import ArgumentParser
 
 
 def main(opt):

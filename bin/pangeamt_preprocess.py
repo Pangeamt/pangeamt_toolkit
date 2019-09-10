@@ -11,12 +11,12 @@ import torch
 from functools import partial
 from collections import Counter, defaultdict
 
-from pangeamt_toolkit.onmt.utils.logging import init_logger, logger
-from pangeamt_toolkit.onmt.utils.misc import split_corpus
-import pangeamt_toolkit.onmt.inputters as inputters
-import pangeamt_toolkit.onmt.opts as opts
-from pangeamt_toolkit.onmt.utils.parse import ArgumentParser
-from pangeamt_toolkit.onmt.inputters.inputter import _build_fields_vocab,\
+from onmt.utils.logging import init_logger, logger
+from onmt.utils.misc import split_corpus
+import onmt.inputters as inputters
+import onmt.opts as opts
+from onmt.utils.parse import ArgumentParser
+from onmt.inputters.inputter import _build_fields_vocab,\
                                     _load_vocab
 
 

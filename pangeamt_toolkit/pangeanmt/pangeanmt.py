@@ -3,17 +3,17 @@ import os
 import re
 import torch
 from shutil import copytree, ignore_patterns
-import pangeamt_toolkit.onmt.inputters as inputters
-from pangeamt_toolkit.onmt.inputters.dataset_base import Dataset
-from pangeamt_toolkit.onmt.inputters.text_dataset import TextDataReader
-from pangeamt_toolkit.onmt.inputters.inputter import OrderedIterator
-from pangeamt_toolkit.onmt.utils.parse import ArgumentParser
-from pangeamt_toolkit.onmt.model_builder import build_base_model
-from pangeamt_toolkit.onmt.utils.misc import use_gpu
-from pangeamt_toolkit.onmt.utils.optimizers import Optimizer
-from pangeamt_toolkit.onmt.trainer import build_trainer
-from pangeamt_toolkit.onmt.translate import GNMTGlobalScorer
-from pangeamt_toolkit.onmt.models import ModelSaver
+import onmt.inputters as inputters
+from onmt.inputters.dataset_base import Dataset
+from onmt.inputters.text_dataset import TextDataReader
+from onmt.inputters.inputter import OrderedIterator
+from onmt.utils.parse import ArgumentParser
+from onmt.model_builder import build_base_model
+from onmt.utils.misc import use_gpu
+from onmt.utils.optimizers import Optimizer
+from onmt.trainer import build_trainer
+from onmt.translate import GNMTGlobalScorer
+from onmt.models import ModelSaver
 from pangeamt_toolkit.pangeanmt.extended_model.extended_model import ExtendedModel
 from pangeamt_toolkit.pangeanmt.onmtx_translator import OnmtxTranslator
 
