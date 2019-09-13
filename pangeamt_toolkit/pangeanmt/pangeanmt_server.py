@@ -31,7 +31,7 @@ class PangeanmtServer:
             config = json.loads(file.read())
 
         self._app['nmt'] = Pangeanmt(model_path)
-        
+
         self._app['pipeline'] = Pipeline(config['pipeline_config'],\
             config['src_lang'], config['tgt_lang'])
 
@@ -57,7 +57,7 @@ class PangeanmtServer:
             model_path = model_path[:-1]
         model_name = model_path.split('/')[-1]
         log_name = f'log_{model_name}.txt'
-        logs_dir = f'{("/").join(engine_model.split("/")[:-1])}/logs/'
+        logs_dir = f'{("/").join(model_path.split("/")[:-1])}/logs/'
         print(logs_dir)
         try:
             os.mkdir(logs_dir)
