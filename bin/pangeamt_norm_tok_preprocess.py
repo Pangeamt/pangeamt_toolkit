@@ -45,6 +45,7 @@ def main(args):
     pipelines = {args.src: pipeline_src, args.tgt: pipeline_tgt}
 
     to_join = []
+    langs = [args.src, args.tgt]
     for lang in langs:
         p = Process(target=_process, args=(args.data, lang, pipelines,))
         p.start()
