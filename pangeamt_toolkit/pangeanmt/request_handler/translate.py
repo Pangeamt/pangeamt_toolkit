@@ -46,7 +46,7 @@ async def translate(req):
                     f'{words[4]:>17} {translation.pred_score}\n\n')
             ans['tus'].append({'src': seg.src, 'tgt': seg.tgt})
 
-        return _web.json_response(req, status=200)
+        return _web.json_response(ans, status=200)
 
     except Exception as e:
         response_obj = {'status': 'failed', 'reason': str(e)}
