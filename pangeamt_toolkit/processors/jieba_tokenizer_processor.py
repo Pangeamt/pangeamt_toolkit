@@ -1,13 +1,10 @@
 import jieba as _jieba
+from pangeamt_toolkit.processors import ProcessorBase
 
-class JiebaTokenizerProcessor:
+class JiebaTokenizerProcessor(ProcessorBase):
 
     def __init__(self):
-        self._mod = 'tok'
-
-    def get_mod(self):
-        return self._mod
-    mod = property(get_mod)
+        super().__init__('tok')
 
     def tokenize(self, str, escape=None):
         """ Applies jieba tokenization to str
@@ -22,7 +19,7 @@ class JiebaTokenizerProcessor:
     def preprocess(self, seg):
         seg.src = self.tokenize(seg.src)
 
-    def preprocess_str(self, seg):
+    def preprocess_str(self, str):
         return self.tokenize(str)
 
     def postprocess(self, seg):

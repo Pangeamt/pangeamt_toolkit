@@ -16,13 +16,13 @@ def main(args):
         config = json.load(c_file)
         processors = get_processors(config)
 
-    pipeline = Pipeline(processors)
+    pipeline = Pipeline(processors, config['src_lang'], config['tgt_lang'])
 
     pipeline.postprocess_file(args.src_file, args.tgt_file)
 
 def get_processors(config):
     processors = config['pipeline_config']
-    if config['tgt_lang'] in ['ja', 'ch']:
+    if config['tgt_lang'] in ['ja', 'zh', 'tw']:
         for i, processor in enumerate(processors):
             if processor['name'] == 'tokenize':
                 processors.pop(i)

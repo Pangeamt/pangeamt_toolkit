@@ -14,15 +14,12 @@ from pangeamt_toolkit.pangeanmt import Pangeanmt
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
-current_dir = os.path.abspath(os.path.dirname(__file__))
-os.chdir(current_dir)
-
 class PangeanmtServer:
-    def __init__(self, engine_path):
+    def __init__(self, model_path):
+        os.chdir(model_path)
         self._app = web.Application()
-        model_path = engine_path + "/extended_model"
-        config_path = model_path + '/config.json'
-        log_path = self._set_up_log(engine_path)
+        config_path = os.path.join(model_path, "config.json")
+        log_path = self._set_up_log(model_path)
 
         with open(log_path, 'a+') as file:
             named_tuple = time.localtime()
@@ -33,10 +30,15 @@ class PangeanmtServer:
         with open(config_path, 'r') as file:
             config = json.loads(file.read())
 
-        self._app['nmt'] = Pangeanmt(model_path) # config['model'] ?
-        self._app['pipeline'] = Pipeline(config['pipeline_config'])
-        self._app['pipeline_tgt'] = Pipeline(config['pipeline_config_tgt'])
-        self._app['engine_path'] = engine_path
+        self._app['nmt'] = Pangeanmt(model_path)
+        
+        self._app['pipeline'] = Pipeline(config['pipeline_config'],\
+            config['src_lang'], config['tgt_lang'])
+
+        self._app['pipeline_tgt'] = Pipeline(config['pipeline_config_tgt'],\
+            config['tgt_lang'])
+
+        self._app['model_path'] = model_path
         self._app['lock'] = asyncio.Lock()
         self._app['sem'] = asyncio.Semaphore()
         self._app['ol'] = config['online_learning']['active']
@@ -50,12 +52,12 @@ class PangeanmtServer:
     def start(self):
         web.run_app(self._app, port=8081)
 
-    def _set_up_log(self, engine_path):
-        while engine_path[-1] == '/':
-            engine_path = engine_path[:-1]
-        model_name = engine_path.split('/')[-1]
+    def _set_up_log(self, model_path):
+        while model_path[-1] == '/':
+            model_path = model_path[:-1]
+        model_name = model_path.split('/')[-1]
         log_name = f'log_{model_name}.txt'
-        logs_dir = f'{("/").join(engine_path.split("/")[:-1])}/logs/'
+        logs_dir = f'{("/").join(engine_model.split("/")[:-1])}/logs/'
         print(logs_dir)
         try:
             os.mkdir(logs_dir)

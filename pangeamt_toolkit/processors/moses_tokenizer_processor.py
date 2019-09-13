@@ -1,16 +1,15 @@
 from sacremoses import MosesTokenizer as _MosesTokenizer
 from sacremoses import MosesDetokenizer as _MosesDetokenizer
+from pangeamt_toolkit.processors import ProcessorBase
 
-class MosesTokenizerProcessor:
+class MosesTokenizerProcessor(ProcessorBase):
 
-    def __init__(self, src_lang, tgt_lang):
-        self._mod = 'tok'
-        self._mtk = _MosesTokenizer(lang=src_lang)
-        self._mdk = _MosesDetokenizer(lang=tgt_lang)
+    def __init__(self):
+        super().__init__('tok')
 
-    def get_mod(self):
-        return self._mod
-    mod = property(get_mod)
+    def initialize(self):
+        self._mtk = _MosesTokenizer(self.src_lang)
+        self._mdk = _MosesDetokenizer(self.tgt_lang)
 
     def preprocess(self, seg):
         """ Applies the MosesTokenizer to seg.src

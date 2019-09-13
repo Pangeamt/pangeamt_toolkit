@@ -1,3 +1,4 @@
+from pangeamt_toolkit.processors.processor_base import ProcessorBase
 from pangeamt_toolkit.processors.bpe_processor import BPEProcessor
 from pangeamt_toolkit.processors.processors_pipeline import Pipeline
 from pangeamt_toolkit.processors.punct_processor import PunctProcessor
@@ -13,4 +14,4 @@ from pangeamt_toolkit.processors.japanese_normalizer_processor import JapaneseNo
 __all__ = ['BPEProcessor', 'Pipeline', 'JiebaTokenizerProcessor',
     'MecabTokenizerProcessor', 'MosesTokenizerProcessor', 'MosesTruecasingProcessor',
     'MosesNormalizerProcessor', 'GeneralTokenizerProcessor', 'PunctProcessor',
-    'JapaneseNormalizerProcessor']
+    'JapaneseNormalizerProcessor', 'ProcessorBase']

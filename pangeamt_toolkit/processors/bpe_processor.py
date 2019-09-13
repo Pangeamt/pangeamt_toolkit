@@ -2,13 +2,13 @@ from subword_nmt.apply_bpe import BPE as _BPE
 from subword_nmt.apply_bpe import read_vocabulary as _rv
 from re import sub as _sub
 import codecs as _codecs
+from pangeamt_toolkit.processors import ProcessorBase
 
-
-class BPEProcessor:
+class BPEProcessor(ProcessorBase):
 
     def __init__(self, bpe_codes, bpe_vocab=None, bpe_threshold=None,\
             bpe_glossaries=None):
-        self._mod = 'bpe'
+        super().__init__('bpe')
         if bpe_glossaries == None:
             _glossaries = []
         else:
@@ -20,10 +20,6 @@ class BPEProcessor:
                 vocab=_vocab, glossaries=_glossaries)
         else:
             self._bpe = _BPE(_codecs.open(bpe_codes, encoding='utf-8'))
-
-    def get_mod(self):
-        return self._mod
-    mod = property(get_mod)
 
     def _parse_glossary(self, str):
         return str.encode('utf-8').decode('utf-8')

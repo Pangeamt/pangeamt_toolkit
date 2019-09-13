@@ -1,14 +1,11 @@
 import re
+from pangeamt_toolkit.processors import ProcessorBase
 
-class PlaceholderProcessor:
+class PlaceholderProcessor(ProcessorBase):
 
     def __init__(self):
-        self._mod = 'placeholder'
+        super().__init__('placeholder')
         self._r = re.compile(r"｟[^｟｠]*｠")
-
-    def get_mod(self):
-        return self._mod
-    mod = property(get_mod)
 
     def preprocess(self, seg):
         placeholders = self._r.findall(seg.src)

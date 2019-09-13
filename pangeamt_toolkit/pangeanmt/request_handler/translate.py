@@ -14,8 +14,8 @@ async def translate(req):
         batch_to_trans = []
         segs = []
         async with sem:
-            for tu in req.get('tus'):
-                seg = Seg(tu['src'])
+            for src in req.get('srcs'):
+                seg = Seg(src)
                 pipeline.preprocess(seg)
                 batch_to_trans.append(seg.src)
                 segs.append(seg)
@@ -23,7 +23,11 @@ async def translate(req):
         async with lock:
             translations = nmt.translate(batch_to_trans)
 
-        for tu in req.get('tus'):
+        ans = {
+            'tus':[]
+        }
+
+        for _ in range(len(req.get('srcs'))):
             named_tuple = time.localtime() # get struct_time
             time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)
             seg = segs.pop(0)
@@ -40,7 +44,7 @@ async def translate(req):
                     f'{words[2]:>17} {seg.tgt_raw}\n'\
                     f'{words[3]:>17} {seg.tgt}\n'\
                     f'{words[4]:>17} {translation.pred_score}\n\n')
-            tu['tgt'] = seg.tgt
+            ans['tus'].append({'src': seg.src, 'tgt': seg.tgt})
 
         return _web.json_response(req, status=200)
 

@@ -1,23 +1,16 @@
 from sacremoses import MosesPunctNormalizer as _MosesPunctNormalizer
+from pangeamt_toolkit.processors import ProcessorBase
 
-class PunctProcessor:
+class PunctProcessor(ProcessorBase):
 
-    def __init__(self, lang):
-        self._mod = 'punct'
-        self._mpn = _MosesPunctNormalizer(lang)
+    def __init__(self):
+        super().__init__('punct')
 
-    def get_mod(self):
-        return self._mod
-    mod = property(get_mod)
+    def initialize(self):
+        self._mpn = _MosesPunctNormalizer(self.src_lang)
 
     def preprocess(self, seg):
         seg.src = self._mpn.normalize(seg.src)
 
-    def preprocess_str(self, seg):
+    def preprocess_str(self, str):
         return self._mpn.normalize(str)
-
-    def postprocess(self, seg):
-        seg.tgt = seg.tgt
-
-    def postprocess_str(self, str):
-        return str

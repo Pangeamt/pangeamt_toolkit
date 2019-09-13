@@ -23,8 +23,12 @@ def _load_pipelines(config, src_lang, tgt_lang):
         config = json.load(config_file)
         print('Loading pipelines..')
         pipelines = {
-                src_lang: Pipeline(config['pipeline_config']),
-                tgt_lang: Pipeline(config['pipeline_config_tgt'])
+                src_lang:\
+                    Pipeline(config['pipeline_config'], config['src_lang'],\
+                        config['tgt_lang']),
+                        
+                tgt_lang:\
+                    Pipeline(config['pipeline_config_tgt'], config['tgt_lang'])
             }
         print('Pipelines loaded..')
     return pipelines

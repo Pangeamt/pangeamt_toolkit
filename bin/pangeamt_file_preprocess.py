@@ -18,7 +18,7 @@ def main(args):
         config = json.load(c_file)
         processors = config['pipeline_config']
 
-    pipeline = Pipeline(processors)
+    pipeline = Pipeline(processors, config['src_lang'], config['tgt_lang'])
 
     pipeline.preprocess_file(args.src_file)
 

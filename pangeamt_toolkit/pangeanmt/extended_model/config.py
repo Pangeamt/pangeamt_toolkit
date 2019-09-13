@@ -18,9 +18,9 @@ class Config:
 
         # Get pt file
         model_files = []
-        for file in os.listdir(self._model_dir):
+        for file in os.listdir(f'{self._model_dir}/translation_model'):
             if file.endswith(".pt"):
-                model_files.append(os.path.join(model_dir,file))
+                model_files.append(os.path.join(model_dir,'translation_model', file))
         if len(model_files) != 1:
             msg = f"Extended model {self._model_dir} sould have one .pt file. {len(model_files)}"
             raise ValueError(msg)

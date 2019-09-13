@@ -1,18 +1,17 @@
 from sacremoses import MosesPunctNormalizer as _MosesNormalizer
+from pangeamt_toolkit.processors import ProcessorBase
 
-class MosesNormalizerProcessor:
+class MosesNormalizerProcessor(ProcessorBase):
 
-    def __init__(self, src_lang, tgt_lang=None):
-        self._mod = 'norm'
-        self._mn_src = _MosesNormalizer(lang=src_lang)
-        if tgt_lang:
-            self._mn_tgt = _MosesNormalizer(lang=tgt_lang)
+    def __init__(self):
+        super().__init__('norm')
+
+    def initialize(self):
+        self._mn_src = _MosesNormalizer(self.src_lang)
+        if self.tgt_lang:
+            self._mn_tgt = _MosesNormalizer(self.tgt_lang)
         else:
             self._mn_tgt = None
-
-    def get_mod(self):
-        return self._mod
-    mod = property(get_mod)
 
     def preprocess(self, seg):
         """ Applies the MosesNormalizer to seg.src

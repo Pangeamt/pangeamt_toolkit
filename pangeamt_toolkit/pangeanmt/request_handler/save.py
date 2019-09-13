@@ -5,15 +5,14 @@ async def save(req):
     nmt = req.app['nmt']
     lock = req.app['lock']
     ol = req.app['ol']
-    engine_path = req.app['engine_path']
+    model_path = req.app['model_path']
     log = req.app['log_path']
 
     try:
         if not ol:
             raise Exception('Online Learning is not active.')
         async with lock:
-            extend = '/extended_model'
-            path = f"/{engine_path}{extend}_tmp"
+            path = os.path.join(model_path, "/translation_model_tmp")
             nmt.save_model(path)
             named_tuple = time.localtime()
             time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)

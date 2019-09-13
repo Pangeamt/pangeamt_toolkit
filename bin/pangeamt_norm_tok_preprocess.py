@@ -14,15 +14,13 @@ def _get_parser():
     return parser
 
 # Builds a config for applying only norm and tok
-def _config_builder(lang):
+def _config_builder():
     return [
         {
-            'name': 'normalizer',
-            'args': [lang]
+            'name': 'normalizer'
         },
         {
-            'name': 'tokenize',
-            'args': [lang]
+            'name': 'tokenize'
         }
     ]
 
@@ -38,13 +36,11 @@ def _process(path, lang, pipelines):
 
 def main(args):
 
-    langs = [args.src, args.tgt]
+    config = _config_builder()
 
-    src_config = _config_builder(args.src)
-    pipeline_src = Pipeline(src_config)
+    pipeline_src = Pipeline(config, args.src)
 
-    tgt_config = _config_builder(args.tgt)
-    pipeline_tgt = Pipeline(tgt_config)
+    pipeline_tgt = Pipeline(config, args.tgt)
 
     pipelines = {args.src: pipeline_src, args.tgt: pipeline_tgt}
 

@@ -15,6 +15,9 @@ async def train(req):
         req = await req.json() # TODO sensitive point
         async with lock:
             for tu in req['tus']:
+                if tu['tgt'] == '':
+                    raise Exception('Missing target segment for Online '\
+                        'Learning Training.')
                 src_preprocessed = pipeline.preprocess_str(tu['src'])
                 tgt_preprocessed = pipeline_tgt.preprocess_str(tu['tgt'])
                 named_tuple = time.localtime() # get struct_time

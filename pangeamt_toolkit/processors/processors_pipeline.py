@@ -4,7 +4,7 @@ from re import sub as _sub
 
 class Pipeline:
 
-    def __init__(self, processors):
+    def __init__(self, processors, src_lang=None, tgt_lang=None):
         """ processors is a list of dicts from the general config file
             with this structure:
                 {
@@ -17,10 +17,18 @@ class Pipeline:
             processor = self._PROCESSORS[process['name']]
             klass_name = processor['class']
             path = processor['path']
-            args = process['args']
+            try:
+                args = process['args']
+            except:
+                args = []
             mod = __import__(path, fromlist=[klass_name])
             klass = getattr(mod, klass_name)
             processor = klass(*args)
+            if src_lang:
+                processor.src_lang = src_lang
+            if tgt_lang:
+                processor.tgt_lang = tgt_lang
+            processor.initialize()
             self._processes.append(processor)
 
     def preprocess(self, seg):
