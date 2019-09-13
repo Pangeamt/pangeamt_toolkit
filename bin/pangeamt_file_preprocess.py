@@ -25,5 +25,6 @@ def main(args):
 if __name__ == "__main__":
     parser = _get_parser()
     args = parser.parse_args()
+    os.chdir(os.path.dirname(os.path.realpath(args.config)))
 
     main(args)

@@ -26,7 +26,7 @@ def _load_pipelines(config, src_lang, tgt_lang):
                 src_lang:\
                     Pipeline(config['pipeline_config'], config['src_lang'],\
                         config['tgt_lang']),
-                        
+
                 tgt_lang:\
                     Pipeline(config['pipeline_config_tgt'], config['tgt_lang'])
             }
@@ -66,5 +66,6 @@ def main(args):
 if __name__ == "__main__":
     parser = _get_parser()
     args = parser.parse_args()
+    os.chdir(os.path.dirname(os.path.realpath(args.config)))
 
     main(args)

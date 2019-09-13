@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 import json
 import argparse
 from pangeamt_toolkit.processors import Pipeline
@@ -32,5 +33,6 @@ def get_processors(config):
 if __name__ == "__main__":
     parser = _get_parser()
     args = parser.parse_args()
+    os.chdir(os.path.dirname(os.path.realpath(args.config)))
 
     main(args)
