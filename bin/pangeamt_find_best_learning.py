@@ -15,15 +15,13 @@ class Engine:
             self._config['src_lang'], self._config['tgt_lang'])
         self._tgt_pipeline = Pipeline(self._config['pipeline_config_tgt'],\
             self._config['tgt_lang'])
-        self._in_file = in_file
-        self._ref_file = ref_file
+        self._in_file = os.path.join('data', in_file)
+        self._ref_file = os.path.join('data', ref_file)
 
     def train(self):
         p = Pangeanmt('.')
-        dir_to_in = os.path.join('data', self._in_file)
-        dir_to_ref= os.path.join('data', self._ref_file)
-        with open(dir_to_in, 'r') as src_file:
-            with open(dir_to_ref, 'r') as tgt_file:
+        with open(self._in_file, 'r') as src_file:
+            with open(self._ref_file, 'r') as tgt_file:
                 for seg in src_file:
                     try:
                         src = self._src_pipeline.preprocess_str(seg)
@@ -36,10 +34,8 @@ class Engine:
         return p
 
     def translate_file(self, p, output_file):
-        dir_to_in = os.path.join('data', self._in_file)
-        dir_to_out= os.path.join('data', output_file)
-        with open(dir_to_in, 'r') as in_file:
-            with open(dir_to_out, 'w+') as out_file:
+        with open(self._in_file, 'r') as in_file:
+            with open(output_file, 'w+') as out_file:
                 for seg in in_file:
                     self._src_pipeline.preprocess_str(seg)
                     translation = p.translate([seg])
@@ -71,7 +67,8 @@ def main(args):
     e = Engine(args.src_file, args.ref_file)
     p = Pangeanmt('.')
     best_learning_rate = (0, 0)
-    e.translate_file(p, 'base_translation.txt')
+    print('Translating with the base model...')
+    e.translate_file(p, os.path.join('data','base_translation.txt'))
     shutil.copy('config.json', 'backup_config.json')
     alpha = args.learning_rate
     while alpha <= args.max_learning_rate:
@@ -79,9 +76,9 @@ def main(args):
         e.gen_config(alpha)
         p = e.train()
         print('Translating file.')
-        output_file = f'{alpha}_{args.src_file}.txt'
+        output_file = os.path.join('data', f'{alpha}_{args.src_file}.txt')
         e.translate_file(p, output_file)
-        params = ['pangeamt_multi_bleu.perl', args.ref_file]
+        params = ['pangeamt_multi_bleu.perl', self._ref_file]
         with open(output_file, 'r') as file:
             out = subprocess.check_output(params, stdin=file).decode('utf-8')
             print(out)
