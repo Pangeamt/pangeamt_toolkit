@@ -1,6 +1,6 @@
 from setuptools import setup
 import sys
-
+# This is a change
 try:
     from semantic_release import setup_hook
     setup_hook(sys.argv)
