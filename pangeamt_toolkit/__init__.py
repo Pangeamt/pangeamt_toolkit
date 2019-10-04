@@ -14,4 +14,4 @@ from pangeamt_toolkit.pangeanmt import Pangeanmt, PangeanmtServer
 import sys
 import onmt
 sys.modules['pangeamt_toolkit.onmt'] = onmt
-__version__ = '3.4.10'
+__version__ = '3.4.11'
