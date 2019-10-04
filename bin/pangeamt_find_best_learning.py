@@ -78,7 +78,7 @@ def main(args):
         print('Translating file.')
         output_file = os.path.join('data', f'{alpha}_{args.src_file}.txt')
         e.translate_file(p, output_file)
-        params = ['pangeamt_multi_bleu.perl', self._ref_file]
+        params = ['pangeamt_multi_bleu.perl', args.ref_file]
         with open(output_file, 'r') as file:
             out = subprocess.check_output(params, stdin=file).decode('utf-8')
             print(out)
