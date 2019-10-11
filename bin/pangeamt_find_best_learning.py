@@ -11,24 +11,32 @@ class Engine:
     def __init__(self, in_file, ref_file):
         with open('config.json', 'r') as file:
             self._config = json.loads(file.read())
+
         self._src_pipeline = Pipeline(self._config['pipeline_config'],\
             self._config['src_lang'], self._config['tgt_lang'])
+
         self._tgt_pipeline = Pipeline(self._config['pipeline_config_tgt'],\
             self._config['tgt_lang'])
+
         self._in_file = os.path.join('data', in_file)
         self._ref_file = os.path.join('data', ref_file)
 
+
+    # Returns trained model
     def train(self):
         p = Pangeanmt('.')
+
         with open(self._in_file, 'r') as src_file:
             with open(self._ref_file, 'r') as tgt_file:
                 for seg in src_file:
                     try:
                         src = self._src_pipeline.preprocess_str(seg)
-                        tgt = self._tgt_pipeline.preprocess_str(
-                            tgt_file.readline()
-                        )
+
+                        tgt_seg = tgt_file.readline()
+                        tgt = self._tgt_pipeline.preprocess_str(tgt_seg)
+
                         p.train(src, tgt)
+
                     except:
                         print('Something went wrong.')
         return p
@@ -37,16 +45,22 @@ class Engine:
         with open(self._in_file, 'r') as in_file:
             with open(output_file, 'w+') as out_file:
                 for seg in in_file:
-                    self._src_pipeline.preprocess_str(seg)
+                    seg = self._src_pipeline.preprocess_str(seg)
+
                     translation = p.translate([seg])
+
                     tgt = (' ').join(translation[0].tgt)
                     tgt = self._src_pipeline.postprocess_str(tgt)
+
                     out_file.write(f'{tgt}\n')
 
     def gen_config(self, alpha):
         lr = self._config['opts']['learning_rate']
+
         os.rename('config.json', f'{lr}_config.json')
+
         self._config['opts']['learning_rate'] = alpha
+
         with open('config.json', 'w+') as config_file:
             config_file.write(json.dumps(self._config))
 
@@ -54,6 +68,7 @@ class Engine:
 def _get_parser():
     parser = argparse.ArgumentParser(description='Try different learning rates'\
         ' to find the best.')
+
     parser.add_argument('dir', help="Path to extended model.")
     parser.add_argument('src_file', help='Which file to translate.')
     parser.add_argument('ref_file', help='Reference file when training.')
@@ -78,7 +93,7 @@ def main(args):
         print('Translating file.')
         output_file = os.path.join('data', f'{alpha}_{args.src_file}.txt')
         e.translate_file(p, output_file)
-        params = ['pangeamt_multi_bleu.perl', args.ref_file]
+        params = ['pangeamt_multi_bleu.perl', self._ref_file]
         with open(output_file, 'r') as file:
             out = subprocess.check_output(params, stdin=file).decode('utf-8')
             print(out)
