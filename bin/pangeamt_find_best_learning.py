@@ -29,16 +29,15 @@ class Engine:
         with open(self._in_file, 'r') as src_file:
             with open(self._ref_file, 'r') as tgt_file:
                 for seg in src_file:
-                    try:
-                        src = self._src_pipeline.preprocess_str(seg)
+                    #try:
+                    src = self._src_pipeline.preprocess_str(seg)
 
-                        tgt_seg = tgt_file.readline()
-                        tgt = self._tgt_pipeline.preprocess_str(tgt_seg)
+                    tgt_seg = tgt_file.readline()
+                    tgt = self._tgt_pipeline.preprocess_str(tgt_seg)
 
-                        p.train(src, tgt)
-
-                    except:
-                        print('Something went wrong.')
+                    p.train(src, tgt)
+                    #except:
+                    #    print('Something went wrong.')
         return p
 
     def translate_file(self, p, output_file):
@@ -93,7 +92,8 @@ def main(args):
         print('Translating file.')
         output_file = os.path.join('data', f'{alpha}_{args.src_file}.txt')
         e.translate_file(p, output_file)
-        params = ['pangeamt_multi_bleu.perl', self._ref_file]
+        _ref_file = os.path.join('data', args.ref_file)
+        params = ['pangeamt_multi_bleu.perl', _ref_file]
         with open(output_file, 'r') as file:
             out = subprocess.check_output(params, stdin=file).decode('utf-8')
             print(out)
