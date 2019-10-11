@@ -97,7 +97,7 @@ def main(args):
         with open(output_file, 'r') as file:
             out = subprocess.check_output(params, stdin=file).decode('utf-8')
             print(out)
-            bleu = out.split(' ')[2]
+            bleu = int(out.split(' ')[2])
             if bleu > best_learning_rate[0]:
                 best_learning_rate = (bleu, alpha)
 
