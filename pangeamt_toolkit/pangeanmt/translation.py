@@ -4,4 +4,3 @@ class Translation:
         self.tgt = tgt
         self.attention_matrix =  attention_matrix
         self.score = score
-
