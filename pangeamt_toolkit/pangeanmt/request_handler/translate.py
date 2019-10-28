@@ -43,7 +43,7 @@ async def translate(req):
                     f'{words[1]:>17} {seg.src}\n'\
                     f'{words[2]:>17} {seg.tgt_raw}\n'\
                     f'{words[3]:>17} {seg.tgt}\n'\
-                    f'{words[4]:>17} {translation.pred_score}\n\n')
+                    f'{words[4]:>17} {translation.score}\n\n')
             ans['tus'].append({'src': seg.src, 'tgt': seg.tgt})
 
         return _web.json_response(ans, status=200)
