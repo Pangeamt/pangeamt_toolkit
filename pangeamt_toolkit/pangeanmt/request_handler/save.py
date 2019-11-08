@@ -12,20 +12,21 @@ async def save(req):
     try:
         if not ol:
             raise Exception('Online Learning is not active.')
+        print('Inside Saving')
         async with lock:
-            path = os.path.join(model_path, "/translation_model_tmp")
-            nmt.save_model(path)
+            print("Inside lock")
             named_tuple = time.localtime()
             time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)
             with open(log, 'a+') as file:
-                words = ['new_name:']
-                file.write(f'----Saving----\n'\
-                    f'{time_string}\n'\
-                    f'{words[0]:>17} {req["name"]}\n\n')
-            resp = {
-                'rc': 0
-            }
-            return web.json_response(resp, status=200)
+                file.write(f'----Saving----\n{time_string}\n\n')
+            path = os.path.join(model_path, "/translation_model_tmp")
+            nmt.save_model(path)
+            print('Finished saving')
+
+        resp = {
+            'rc': 0
+        }
+        return web.json_response(resp, status=200)
 
     except Exception as e:
         response_obj = {'status': 'failed', 'reason': str(e)}
