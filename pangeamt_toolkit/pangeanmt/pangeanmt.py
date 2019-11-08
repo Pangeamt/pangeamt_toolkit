@@ -288,7 +288,7 @@ class Pangeanmt:
             else:
                 msg = f"{new_model_dir} already exists"
                 raise ValueError(msg)
-        copytree(self._model.model_dir, new_model_dir, \
+        copytree(self._model_dir, new_model_dir, \
             ignore=ignore_patterns('*.pt'))
         model_filename = os.path.basename(self._model.config.opts.models[0])
         model_filename_base = re.sub('_[0-9]*\.pt$', '', model_filename )
