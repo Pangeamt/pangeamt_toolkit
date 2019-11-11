@@ -290,12 +290,13 @@ class Pangeanmt:
                 raise ValueError(msg)
         copytree(self._model_dir, new_model_dir, \
             ignore=ignore_patterns('*.pt'))
-        model_filename = os.path.basename(self._model.config.opts.models[0])
+        model_filename = os.path.basename(\
+            self._opennmt_model.config.opts.models[0])
         model_filename_base = re.sub('_[0-9]*\.pt$', '', model_filename )
         base_path = os.path.join(new_model_dir, model_filename_base)
         model_saver = ModelSaver(
             base_path,
-            self._model,
+            self._opennmt_model,
             self._model_opts,
             self._fields,
             self._optim,
