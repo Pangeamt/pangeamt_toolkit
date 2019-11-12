@@ -281,25 +281,29 @@ class Pangeanmt:
                 valid_steps=None)
 
     def save_model(self, new_model_dir):
-        new_model_dir = os.path.abspath(new_model_dir)
-        if os.path.isdir(new_model_dir):
-            if not os.listdir:
-                os.rmdir(new_model_dir)
-            else:
-                msg = f"{new_model_dir} already exists"
-                raise ValueError(msg)
-        copytree(self._model_dir, new_model_dir, \
-            ignore=ignore_patterns('*.pt'))
-        model_filename = os.path.basename(\
-            self._opennmt_model.config.opts.models[0])
-        model_filename_base = re.sub('_[0-9]*\.pt$', '', model_filename )
-        base_path = os.path.join(new_model_dir, model_filename_base)
-        model_saver = ModelSaver(
-            base_path,
-            self._opennmt_model,
-            self._model_opts,
-            self._fields,
-            self._optim,
-            keep_checkpoint=-1
-        )
-        model_saver.save(self._train_steps)
+        try:
+            #new_model_dir = os.path.abspath(new_model_dir)
+            #if os.path.isdir(new_model_dir):
+            #    if not os.listdir:
+            #        os.rmdir(new_model_dir)
+            #    else:
+            #        msg = f"{new_model_dir} already exists"
+            #        raise ValueError(msg)
+            os.mkdir(new_model_dir)
+            #copytree(self._model_dir, new_model_dir, \
+            #    ignore=ignore_patterns('*.pt'))
+            #model_filename = os.path.basename(\
+            #    self._opennmt_model.config.opts.models[0])
+            #model_filename_base = re.sub('_[0-9]*\.pt$', '', model_filename )
+            base_path = os.path.join(new_model_dir, 'model_saved')
+            model_saver = ModelSaver(
+                base_path,
+                self._opennmt_model,
+                self._model_opts,
+                self._fields,
+                self._optim,
+                keep_checkpoint=-1
+            )
+            model_saver.save(self._train_steps)
+        except Exception as e:
+            raise Exception(str(e))

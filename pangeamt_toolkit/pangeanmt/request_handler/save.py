@@ -19,7 +19,7 @@ async def save(req):
             time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)
             with open(log, 'a+') as file:
                 file.write(f'----Saving----\n{time_string}\n\n')
-            path = os.path.join(model_path, "/translation_model_tmp")
+            path = os.path.join(model_path, "translation_model_tmp")
             nmt.save_model(path)
             print('Finished saving')
 
