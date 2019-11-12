@@ -83,6 +83,8 @@ def main(args):
     best_learning_rate = (0, 0)
     print('Translating with the base model...')
     e.translate_file(p, os.path.join('data','base_translation.txt'))
+    _ref_file = os.path.join('data', args.ref_file)
+    params = ['pangeamt_multi_bleu.perl', _ref_file]
     with open(os.path.join('data','base_translation.txt'), 'r') as file:
         out = subprocess.check_output(params, stdin=file).decode('utf-8')
         print(out)
@@ -95,8 +97,6 @@ def main(args):
         print('Translating file.')
         output_file = os.path.join('data', f'{alpha}_{args.src_file}.txt')
         e.translate_file(p, output_file)
-        _ref_file = os.path.join('data', args.ref_file)
-        params = ['pangeamt_multi_bleu.perl', _ref_file]
         with open(output_file, 'r') as file:
             out = subprocess.check_output(params, stdin=file).decode('utf-8')
             print(out)

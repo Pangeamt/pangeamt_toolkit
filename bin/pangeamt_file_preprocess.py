@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import json
 import argparse
+import os
 from pangeamt_toolkit.processors import Pipeline
 
 # Preprocess a single file. The output file's name is composed with the
