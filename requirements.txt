@@ -16,7 +16,7 @@ neologdn==0.4
 numpy==1.17.0
 OpenNMT-py
 openpyxl
-pandes
+pandas
 PyYAML==5.1.1
 requests==2.22.0
 sacremoses==0.0.33
