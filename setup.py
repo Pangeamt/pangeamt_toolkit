@@ -14,7 +14,7 @@ setup(
         'bin/pangeamt_translate.py', 'bin/pangeamt_multi_bleu.perl',
         'bin/pangeamt_build_server.py', 'bin/pangeamt_files_preprocess.py',
         'bin/pangeamt_norm_tok_preprocess.py', 'bin/pangeamt_find_best_learning.py',
-        'bin/pangeamt_truecase_preprocess.py'],
+        'bin/pangeamt_truecase_preprocess.py', 'bin/pangeamt_xlsx_train.py'],
     versioning='distance',
     setup_requires='setupmeta'
 )
