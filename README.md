@@ -1,6 +1,8 @@
-<header>
-    PANGEAMT TOOLKIT
-</header>
+<centered>
+    <h1>
+        PANGEAMT TOOLKIT
+    </h1>
+</centered>
 
 <p align="center">
     <a href="https://pypi.org/project/pangeamt-toolkit/">
