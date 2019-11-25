@@ -1,8 +1,8 @@
-<centered>
+<center>
     <h1>
         PANGEAMT TOOLKIT
     </h1>
-</centered>
+</center>
 
 <p align="center">
     <a href="https://pypi.org/project/pangeamt-toolkit/">
