@@ -1,8 +1,7 @@
-# pangeamt_toolkit
-
 <p align="center">
-    <a href="https://github.com/Pangeamt/pangeamt_toolkit/tags">
-        <img alt="GitHub release" src="https://img.shields.io/github/tag/Pangeamt/pangeamt_toolkit">
+    # pangeamt_toolkit
+    <a href="https://pypi.org/project/pangeamt-toolkit/">
+        <img alt="GitHub release" src="https://img.shields.io/pypi/v/pangeamt-toolkit">
     </a>
 </p>
 
