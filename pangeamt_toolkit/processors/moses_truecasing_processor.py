@@ -51,16 +51,16 @@ class MosesTruecasingProcessor(ProcessorBase):
         """
         if seg.src_case == SegCase.UPPER:
             seg.tgt = seg.tgt.upper()
-        elif seg.src_case == SegCase.LOWER:
-            seg.tgt = seg.tgt.lower()
+        #elif seg.src_case == SegCase.LOWER:
+        #    seg.tgt = seg.tgt.lower()
         else:
             seg.tgt = (' ').join(self._mdr.detruecase(seg.tgt))
 
     def postprocess_str(self, str, casing=None):
         if casing == SegCase.UPPER:
             return str.upper()
-        elif casing == SegCase.LOWER:
-            return str.lower()
+        #elif casing == SegCase.LOWER:
+        #    return str.lower()
         else:
             return (' ').join(self._mdr.detruecase(str))
 
