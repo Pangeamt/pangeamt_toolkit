@@ -105,8 +105,8 @@ def main(args):
                 best_learning_rate = (bleu, alpha)
         alpha = str(float(alpha) + float(args.increment))
 
-    print(f'Best learning rate: {best_learning_rate[0]},'\
-        f'with BLEU: {best_learning_rate[1]}')
+    print(f'Best learning rate: {best_learning_rate[1]},'\
+        f'with BLEU: {best_learning_rate[0]}')
 
 if __name__ == "__main__":
     parser = _get_parser()
