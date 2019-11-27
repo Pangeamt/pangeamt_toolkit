@@ -103,7 +103,7 @@ def main(args):
             bleu = float(out.split(' ')[2][:-1])
             if bleu > best_learning_rate[0]:
                 best_learning_rate = (bleu, alpha)
-        alpha = float(alpha) + float(args.increment)
+        alpha = str(float(alpha) + float(args.increment))
 
     print(f'Best learning rate: {best_learning_rate[0]},'\
         f'with BLEU: {best_learning_rate[1]}')
