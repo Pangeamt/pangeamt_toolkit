@@ -89,8 +89,8 @@ def main(args):
         out = subprocess.check_output(params, stdin=file).decode('utf-8')
         print(out)
     shutil.copy('config.json', 'backup_config.json')
-    alpha = args.learning_rate
-    while alpha <= args.max_learning_rate:
+    alpha = float(args.learning_rate)
+    while alpha <= float(args.max_learning_rate):
         print(f'Training with learning rate = {alpha}')
         e.gen_config(alpha)
         p = e.train()
@@ -103,7 +103,7 @@ def main(args):
             bleu = float(out.split(' ')[2][:-1])
             if bleu > best_learning_rate[0]:
                 best_learning_rate = (bleu, alpha)
-        alpha = str(float(alpha) + float(args.increment))
+        alpha = float(alpha) + float(args.increment)
 
     print(f'Best learning rate: {best_learning_rate[1]},'\
         f'with BLEU: {best_learning_rate[0]}')
