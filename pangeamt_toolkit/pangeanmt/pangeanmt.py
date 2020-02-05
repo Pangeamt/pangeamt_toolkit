@@ -11,13 +11,15 @@ from onmt.translate import GNMTGlobalScorer
 from onmt.models import ModelSaver
 from onmt.translate.translator import Translator as Translator
 import onmt.model_builder
-import onmt.translate.beam
+import onmt.translate.beam_search
 import onmt.inputters as inputters
 import onmt.decoders.ensemble
 from onmt.inputters.text_dataset import TextDataReader
 from pangeamt_toolkit.pangeanmt.translation import Translation
 from pangeamt_toolkit.pangeanmt.attention_matrix import AttentionMatrix
-from pangeamt_toolkit.pangeanmt.extended_model.extended_model import ExtendedModel
+from pangeamt_toolkit.pangeanmt.extended_model.extended_model import (
+    ExtendedModel,
+)
 from pangeamt_toolkit.pangeanmt.onmtx_translator import OnmtxTranslator
 from onmt.utils.misc import use_gpu
 
@@ -44,7 +46,9 @@ class Pangeanmt:
 
         # Get the model options
         model_path = self._opts.models[0]
-        checkpoint = torch.load(model_path, map_location=lambda storage, loc: storage)
+        checkpoint = torch.load(
+            model_path, map_location=lambda storage, loc: storage
+        )
         self._model_opts = ArgumentParser.ckpt_model_opts(checkpoint["opt"])
         ArgumentParser.update_model_opts(self._model_opts)
         ArgumentParser.validate_model_opts(self._model_opts)
@@ -52,7 +56,9 @@ class Pangeanmt:
         # Extract vocabulary
         vocab = checkpoint["vocab"]
         if inputters.old_style_vocab(vocab):
-            self._fields = inputters.load_old_vocab(vocab, "text", dynamic_dict=False)
+            self._fields = inputters.load_old_vocab(
+                vocab, "text", dynamic_dict=False
+            )
         else:
             self._fields = vocab
 
@@ -216,7 +222,9 @@ class Pangeanmt:
                 score = translation.pred_scores[0].item()
 
                 # Create a translation object
-                t = Translation(src_tokens, tgt_tokens, attention_matrix, score)
+                t = Translation(
+                    src_tokens, tgt_tokens, attention_matrix, score
+                )
                 # Append to result
                 results.append(t)
         return results

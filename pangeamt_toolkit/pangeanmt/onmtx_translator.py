@@ -1,22 +1,17 @@
 from __future__ import print_function
 from onmt.translate.translator import Translator as _Translator
 import onmt.model_builder
-import onmt.translate.beam
+import onmt.translate.beam_search
 from onmt.translate import TranslationBuilder as _TransBuilder
 import onmt.inputters as inputters
 import onmt.decoders.ensemble
 from pangeamt_toolkit.pangeanmt.onmtx_translation import OnmtxTranslation
 
+
 class OnmtxTranslator(_Translator):
+    def translate(self, src, with_attn=True, batch_size=None, phrase_table=""):
 
-    def translate(
-            self,
-            src,
-            with_attn=True,
-            batch_size=None,
-            phrase_table=""):
-
-        src_dir=None
+        src_dir = None
 
         attn_debug = False
         if with_attn:
@@ -31,7 +26,7 @@ class OnmtxTranslator(_Translator):
             data=[("src", src)],
             dirs=[src_dir],
             sort_key=inputters.str2sortkey[self.data_type],
-            filter_pred=self._filter_pred
+            filter_pred=self._filter_pred,
         )
 
         data_iter = inputters.OrderedIterator(
@@ -41,13 +36,17 @@ class OnmtxTranslator(_Translator):
             train=False,
             sort=False,
             sort_within_batch=False,
-            shuffle=False
+            shuffle=False,
         )
 
         # Translate
         xlation_builder = _TransBuilder(
-            data, self.fields, self.n_best, self.replace_unk, None,
-            self.phrase_table
+            data,
+            self.fields,
+            self.n_best,
+            self.replace_unk,
+            None,
+            self.phrase_table,
         )
 
         results = []
@@ -63,7 +62,7 @@ class OnmtxTranslator(_Translator):
                     translation.src_raw,
                     translation.pred_sents[0],
                     translation.attns[0],
-                    translation.pred_scores[0]
+                    translation.pred_scores[0],
                 )
                 results.append(simple_translation)
         return results
