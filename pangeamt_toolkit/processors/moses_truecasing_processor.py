@@ -53,7 +53,7 @@ class MosesTruecasingProcessor(ProcessorBase):
             seg.tgt = seg.tgt.upper()
         # elif seg.src_case == SegCase.LOWER:
         #    seg.tgt = seg.tgt.lower()
-        else:
+        elif seg.src[0].isupper():
             seg.tgt = (" ").join(self._mdr.detruecase(seg.tgt))
 
     def postprocess_str(self, str, casing=None):
@@ -65,7 +65,7 @@ class MosesTruecasingProcessor(ProcessorBase):
             return (" ").join(self._mdr.detruecase(str))
 
 
-################################################################################
+###############################################################################
 
 
 class _PangeaMTTruecaser(_MosesTruecaser):
