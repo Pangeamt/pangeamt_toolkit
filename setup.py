@@ -17,7 +17,7 @@ setup(
         'bin/pangeamt_norm_tok_preprocess.py',
         'bin/pangeamt_find_best_learning.py',
         'bin/pangeamt_truecase_preprocess.py', 'bin/pangeamt_xlsx_train.py',
-        'bin/get_training_steps.py'
+        'bin/get_training_steps.py', 'bin/auto_tmx2bilingual.py'
     ],
     versioning='distance',
     setup_requires='setupmeta'
