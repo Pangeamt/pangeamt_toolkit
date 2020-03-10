@@ -10,6 +10,7 @@ idna==2.8
 idna-ssl==1.1.0
 jieba==0.39
 joblib==0.13.2
+lxml
 mecab-python3==0.996.2
 multidict==4.5.2
 neologdn==0.4
