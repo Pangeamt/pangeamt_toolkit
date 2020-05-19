@@ -105,53 +105,58 @@ class Pipeline:
                     tgt_file.write(line + '\n')
 
     _PROCESSORS = {
-        'tokenize':{
+        'tokenize': {
             'class': 'GeneralTokenizerProcessor',
             'path': 'pangeamt_toolkit.processors.general_tokenizer_processor'
         },
 
-        'moses_tokenize':{
+        'moses_tokenize': {
             'class': 'MosesTokenizerProcessor',
             'path': 'pangeamt_toolkit.processors.moses_tokenizer_processor'
         },
 
-        'jieba_tokenize':{
+        'jieba_tokenize': {
             'class': 'JiebaTokenizerProcessor',
             'path': 'pangeamt_toolkit.processors.jieba_tokenizer_processor'
         },
 
-        'mecab_tokenize':{
+        'mecab_tokenize': {
             'class': 'MecabTokenizerProcessor',
             'path': 'pangeamt_toolkit.processors.mecab_tokenizer_processor'
         },
 
-        'truecase':{
+        'truecase': {
             'class': 'MosesTruecasingProcessor',
             'path': 'pangeamt_toolkit.processors.moses_truecasing_processor'
         },
 
-        'normalizer':{
+        'normalizer': {
             'class': 'MosesNormalizerProcessor',
             'path': 'pangeamt_toolkit.processors.moses_normalizer_processor'
         },
 
-        'bpe':{
+        'bpe': {
             'class': 'BPEProcessor',
             'path': 'pangeamt_toolkit.processors.bpe_processor'
         },
 
-        'placeholder':{
+        'placeholder': {
             'class': 'PlaceholderProcessor',
             'path': 'pangeamt_toolkit.processors.placeholder_processor'
         },
 
-        'punct':{
+        'punct': {
             'class': 'PunctProcessor',
             'path': 'pangeamt_toolkit.processors.punct_processor'
         },
 
-        'japanese_normalizer':{
+        'japanese_normalizer': {
             'class': 'JapaneseNormalizerProcessor',
             'path': 'pangeamt_toolkit.processors.japanese_normalizer_processor'
         },
+
+        'cn2num': {
+            'class': 'ChineseNumberProcessor',
+            'path': 'pangeamt_toolkit.processors.chinese_numbers_processor'
+        }
     }
