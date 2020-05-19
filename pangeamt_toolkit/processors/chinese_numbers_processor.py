@@ -15,7 +15,10 @@ class ChineseNumberProcessor(ProcessorBase):
     @staticmethod
     def cn2ar(text):
         for seq in ChineseNumberProcessor._get_numbers(text):
-            text = text.replace(seq, str(_cn2num(seq, numbering_type="mid")))
+            if len(seq) > 2:
+                text = text.replace(
+                    seq, str(_cn2num(seq, numbering_type="mid"))
+                )
         return text
 
     def preprocess(self, seg):
