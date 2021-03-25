@@ -19,7 +19,7 @@ OpenNMT-py==1.0.0
 openpyxl
 pandas
 pycnnum==1.0.1
-PyYAML==5.1.1
+PyYAML==5.4
 requests==2.22.0
 sacremoses==0.0.33
 six==1.12.0
