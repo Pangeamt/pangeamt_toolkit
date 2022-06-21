@@ -14,7 +14,7 @@ lxml
 mecab-python3==0.996.2
 multidict==4.5.2
 neologdn==0.4
-numpy==1.17.0
+numpy==1.22.0
 OpenNMT-py==1.0.0
 openpyxl
 pandas
